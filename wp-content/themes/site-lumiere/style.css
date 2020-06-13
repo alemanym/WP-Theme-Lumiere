@@ -1,0 +1,1518 @@
+/*
+Theme Name: Site Lumière
+Theme URI: http://www.eltair.org/lumiere
+Template: hueman
+Author: Marc
+Description: Thème personnalisé pour le site
+Version: 1.0.1591950659
+Updated: 2020-06-12 10:30:59
+
+*/
+
+html {
+	scroll-behavior: smooth;
+}
+body {
+	color: #000!important;
+}
+b {
+	font-weight: bold;
+}
+i {
+	font-style: italic;
+}
+p > span:not([class]):not([style]) {
+	color: #91288e;
+}
+#nav-header .nav li a {
+	color: #fff!important;
+	font-size: 20px;
+  font-weight: 500;
+  font-variant: small-caps;
+}
+#nav-header li .sub-menu li a {
+	font-size: 14px;
+}
+
+/*******************************/
+/* Forum - supprimer le logout */
+/*******************************/
+.logout-link {
+	display: none !important;
+}
+/*********************/
+/* Page de connexion */
+/*********************/
+.page-id-368 #header, 
+.page-id-368 #footer, 
+.page-id-368 .sidebar,
+.page-id-368 #wpadminbar, 
+.page-id-368 h3 {
+	display: none;
+}
+.page-id-368 div.main-inner {
+	background-image: none !important;
+}
+.page-id-368 .page-title {
+	border-bottom: 0;
+}
+.page-id-368.boxed #page {
+	background: white !important;
+	margin-top: 0px !important;
+}
+.page-id-368.boxed #wrapper {
+	box-shadow: none !important;
+}
+.page-id-368 #page .container-inner {
+	box-shadow: none;
+}
+
+/*****************/
+/* Champ message */
+/*****************/
+.bpfb_form_container {
+	padding-top: 30px !important;
+	background: none !important;
+}
+#whats-new {
+	min-height: 5em !important;
+	border: 1px solid white !important;
+	background-image: url('/lumiere/wp-content/uploads/2019/01/corners.png') !important;
+	background-position: calc(100% - 5px) 5px !important;
+	background-repeat: no-repeat !important;
+	
+}
+#whats-new:hover {
+	min-height: 5em !important;
+	border: 1px solid white !important;
+	margin-right: 100px !important;
+	overflow: auto;
+}
+
+#whats-new-content .bpfb_actions_container {
+	display: none;
+}
+#whats-new-content.active {
+	position: relative;
+}
+#whats-new-content.active .bpfb_actions_container {
+	display: initial;
+	float: left;
+}
+#whats-new-content.active #whats-new:focus, #whats-new-content.active #whats-new:active,
+#buddypress-edit-activity-wrapper #whats-new:focus,
+#buddypress-edit-activity-wrapper #whats-new:active {
+	min-height: 10em !important;
+	border: 1px solid white !important;
+	box-shadow: inset 1px 1px 5px rgb(145, 40, 142, 0.5) !important;
+}
+#whats-new-avatar img {
+	opacity: 0;
+}
+#whats-new-avatar {
+	background-image: url('http://www.eltair.org/lumiere/wp-content/uploads/2019/01/icon-edit.png');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	width: 50px;
+	height: 58px;
+}
+#whats-new-avatar a {
+	display: none;
+}
+
+/* on retire les links etc */
+article.bp_activity p.activity-greeting {
+	display: none;
+}
+#whats-new-textarea::before {
+	content: 'Ecrivez votre message ...';
+	color: #555;
+	font-size: medium;
+}
+#whats-new-textarea.active::before {
+	content: none;
+}
+#whats-new-textarea textarea,
+#whats-new {
+	background: transparent;
+	z-index: 2;
+	-webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+	-moz-box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+	box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+	resize: vertical;
+	scrollbar-width: thin;
+	transition: all .2s ease, height 0s, width 0s;
+}
+#whats-new-textarea.active {
+	margin-right: 220px;
+}
+div.bpfb_toolbar_container::before {
+	content: 'Insérer : ';
+	float: left;
+	font-size: smaller;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#whats-new-options {
+	display: none;
+	height: 50px;
+}
+#aw-whats-new-submit {
+	animation: none !important;
+}
+#aw-whats-new-submit {
+	animation: none !important;
+}
+#whats-new-content.active #aw-whats-new-submit {
+	width: 100%;
+	background: #ededed !important;
+	border: none !important;
+	padding: 8px 14px !important;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	width: 180px;
+}
+#whats-new-content.active #whats-new-post-in-box {
+	position: absolute;
+	top: 40px;
+	right: -10px;
+	width: 200px;
+	font-size: smaller;
+	font-size: 14px;
+}
+#whats-new-content.active #whats-new-post-in-box #whats-new-post-in {
+	background: white !important;
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	width: 180px;
+	font-size: 14px;
+	border-radius: 5px;
+	border: none;
+    -webkit-box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+    box-shadow: inset 1px 1px 5px rgba(0,0,0,.4);
+}
+#whats-new-content.active #whats-new-post-in-box #whats-new-post-in::before {
+	content: 'Dans';
+	font-size: 14px;
+	position: absolute;
+	color: red;
+	top: 0;
+	left: 0;
+}
+#whats-new-form {
+	padding-bottom: 20px !important;
+	margin-bottom: 35px !important;
+	border-bottom: 1px solid #eee;
+}
+.bpfb_actions_container.bpfb-theme-new a {
+	color: rebeccapurple !important;
+}
+
+/***************************/
+/* suppression du lien RSS */
+/***************************/
+ul li.feed {
+	display: none;	
+}
+
+/*******************************/
+/* Onglet de la page Activités */
+/*******************************/
+#buddypress div.item-list-tabs ul li, 
+#buddypress div.item-list-tabs ul li {
+	border: none;
+	/*border-top: 2px solid #00000000;*/
+	border-radius: 5px 5px 0 0;
+	z-index: 20;
+	font-weight: 500;
+	height: 40px;
+}
+#buddypress div.item-list-tabs ul li.current, 
+#buddypress div.item-list-tabs ul li.selected {
+	background: white !important;
+	box-shadow: 0 0px 5px 0 #91288e;
+	border-radius: 5px 5px 0 0;
+	z-index: 20;
+	margin-left:2px;
+}
+div.item-list-tabs ul li.current a, 
+div.item-list-tabs ul li.selected a {
+	background: transparent !important;
+	font-weight: 400 !important;
+	z-index: 20;
+}
+div.activity-type-tabs::before {
+	font-size: 16px;
+	content: 'Consulter les Messages :';
+	text-transform: uppercase;
+  color: #555;
+  font-size: .8em;
+  font-weight: 500;
+  line-height: 1.5rem;
+	display: block;
+	padding: 5px 15px 10px 0px;
+}
+div.item-list-tabs {
+	padding-top: 10px;
+	box-shadow: 20px 0 10px -10px white inset, -20px 0 10px -10px white inset, inset 0 -25px 15px -25px #91288e;
+}
+li#activity-filter-select select,
+li.last.filter select {
+  position: absolute;
+  right: 20px;
+  padding: 5px;
+	background: white;
+	border-radius: 5px;
+	border: 1px solid white;
+	box-shadow: inset 1px 1px 3px rgba(0,0,0,.4);
+}
+li#activity-filter-select label,
+li.last.filter label {
+ display: none;
+}
+#buddypress div.item-list-tabs#subnav {
+  max-height: 40px;
+}
+body.activity #subnav,
+body.groups #subnav {
+	border: none !important;
+	box-shadow: none !important;
+	position: relative;
+}
+body.activity #subnav ul::before,
+body.groups #subnav ul::before {
+	display: none;
+}
+body.activity #subnav select,
+body.groups #subnav select {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+/****************************/
+/* Menu top : last à droite */
+/****************************/
+.desktop-menu li:last-child {
+  float: right;
+}
+#header .container::before {
+	box-shadow:  0px 5px 10px -5px #91288E;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/****************************/
+/* Effet de décalage divers */
+/****************************/
+.news-on-hover:hover {
+	padding-left: 15px !important;
+	-webkit-box-shadow: inset 0px -100px 100px -100px #91288E80;
+-moz-box-shadow: inset 0px -100px 100px -100px #91288E80;
+box-shadow: inset 0px -100px 100px -100px #91288E80;
+}
+
+/********************************/
+/* Look & feel des menus gauche */
+/********************************/
+.widget_nav_menu li.menu-item,
+.widget_easy_sidebar_menu_widget li.menu-item {
+	background: #ffffff99 !important;
+	margin: 0 0px;
+	color: #91288e !important;
+}
+.widget_nav_menu li.menu-item a,
+.widget_easy_sidebar_menu_widget li.menu-item a {
+	color: #91288e !important;
+	display: flex;
+	padding-left: 5px;
+}
+.widget_nav_menu li.menu-item a:hover ,
+.widget_easy_sidebar_menu_widget li.menu-item a:hover  {
+	color: #91288e !important;
+	padding-left: 10px;
+	-webkit-box-shadow: inset 0px -100px 100px -100px #91288E80;
+-moz-box-shadow: inset 0px -100px 100px -100px #91288E80;
+box-shadow: inset 0px -100px 100px -100px #91288E80;
+}
+.widget_nav_menu li.menu-item a:first-child:before ,
+.widget_easy_sidebar_menu_widget li.menu-item a:first-child:before {
+	content: ' ' !important;
+}
+
+/***********************/
+/* Look & feel du chat */
+/***********************/
+div.sidebar.s2 div.Quick_Chat_Widget {
+	padding-left : 0 !important;
+}
+div.quick-chat-container {
+	padding-top: 5px;
+}
+div.quick-chat-history-message-alias-container {
+	padding: 5px;
+}
+div.quick-chat-history-container {
+	padding: 0;
+	background: #F9F9F9 !important;
+	border: 1px solid white;
+	-webkit-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+-moz-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+	box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+}
+div.quick-chat-history-message {
+	text-align: justify;
+	padding-left: 5px;
+	border-top: 1px solid #ddd;
+}
+div.quick-chat-container a {
+	color: #91288e;
+}
+div.quick-chat-container input {
+	border: 1px solid white !important;
+}
+div.quick-chat-alias-container::before {
+	content: 'Votre pseudo : ';
+	display: block;
+}
+input.quick-chat-alias {
+	padding: 3px;
+	margin-top: 6px;
+	margin-bottom: 10px;
+	-webkit-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+-moz-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+	box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+}
+div.quick-chat-alias-container::after {
+	content: 'Votre message : ';
+	display: block;
+}
+div.quick-chat-container textarea {
+	border: 1px solid white !important;
+	margin-top: 5px;
+	-webkit-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+-moz-box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+	box-shadow: inset 1px 1px 4px rgba(0,0,0,.4);
+}
+input.quick-chat-send-button {
+	color: white;
+	background: #91288e !important;
+	border-radius: 3px;
+	padding: 4px 14px !important;
+}
+div.quick-chat-links {
+	display: none;
+}
+div.quick-chat-smile {
+	margin: 5px;
+}
+div.quick-chat-linkhome {
+	display: none;
+}
+div.quick-chat-history-alias,
+div.quick-chat-history-alias a {
+	color: #91288e !important;
+}
+/***********************/
+/* Changement du titre de page 'Activités' > 'Messages' */
+/***********************/
+body.activity div.page-title {
+	display: none;
+}
+body.activity #page div.pad.group::before {
+	content: 'MESSAGES';
+  background: none;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  color: #666;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.5rem;
+	width: 100%;
+	margin: -30px;
+	margin-bottom: 30px;
+	padding: 30px 30px 20px;
+  padding-top: 18px;
+  padding-bottom: 17px;
+}
+
+/****************************/
+/* Entete des pages groupes */
+/****************************/
+article.bp_group #item-header h2 {
+	font-size: 1em;
+}
+
+/*******************************/
+/* Bordure arrondi des avatars */
+/*******************************/
+img.avatar {
+	border-radius: 50%;
+	box-shadow: 3px 3px 8px -3px #00000099 !important;
+	background: #efe4ef !important;
+}
+img.avatar:hover {
+	border-radius: 50%;
+}
+
+/*******************************/
+/* Admin bar invisible */
+/*******************************/
+#wpadminbar {
+	background: #00000000;
+	max-width: 1500px;
+	margin: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+#wpadminbar:hover {
+	opacity: 1;
+}
+#wrapper {
+	position: relative;
+	top: -32px;
+}
+#wpadminbar .ab-sub-wrapper, #wpadminbar ul li {
+	background: #91288e;
+	color: #8a1821;
+}
+#wp-admin-bar-wp-logo {
+	display: none !important;
+}
+#wpadminbar ul#wp-admin-bar-root-default>li .ab-sub-wrapper {
+	display: none;
+}
+#wpadminbar ul#wp-admin-bar-root-default li {
+  opacity: 0;
+	transition: all 0.3s;
+}
+#wpadminbar:hover ul#wp-admin-bar-root-default li {
+  opacity: 1;
+}
+#wpadminbar ul#wp-admin-bar-root-default li#wp-admin-bar-comments {
+	display: block;
+	opacity: 1;
+	position: absolute;
+	right: 0;
+	width: 50px;
+}
+#wpadminbar ul#wp-admin-bar-root-default li#wp-admin-bar-new-content {
+	display: block;
+	opacity: 1;
+	position: absolute;
+	right: 50px;
+	width: 75px;
+}
+#wpadminbar #wp-admin-bar-top-secondary {
+	position: absolute;
+	right: 125px;
+}
+#wpadminbar .ab-top-menu > li.hover > .ab-item, #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus, #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item, #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+   background: #711f6e;
+	 color: #fbf5d1;
+}
+#wpadminbar .quicklinks .ab-sub-wrapper .menupop.hover > a, #wpadminbar .quicklinks .menupop ul li a:focus, #wpadminbar .quicklinks .menupop ul li a:focus strong, #wpadminbar .quicklinks .menupop ul li a:hover, #wpadminbar .quicklinks .menupop ul li a:hover strong, #wpadminbar .quicklinks .menupop.hover ul li a:focus, #wpadminbar .quicklinks .menupop.hover ul li a:hover, #wpadminbar .quicklinks .menupop.hover ul li div[tabindex]:focus, #wpadminbar .quicklinks .menupop.hover ul li div[tabindex]:hover, #wpadminbar li #adminbarsearch.adminbar-focused::before, #wpadminbar li .ab-item:focus .ab-icon::before, #wpadminbar li .ab-item:focus::before, #wpadminbar li a:focus .ab-icon::before, #wpadminbar li.hover .ab-icon::before, #wpadminbar li.hover .ab-item::before, #wpadminbar li:hover #adminbarsearch::before, #wpadminbar li:hover .ab-icon::before, #wpadminbar li:hover .ab-item::before, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:focus, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:hover {
+	 color: #fbf5d1;
+}
+#wpadminbar:not(.mobile) > #wp-toolbar a:focus span.ab-label, #wpadminbar:not(.mobile) > #wp-toolbar li:hover span.ab-label, #wpadminbar > #wp-toolbar li.hover span.ab-label {
+	 color: #fbf5d1;
+}
+#wpadminbar .menupop .ab-sub-wrapper, #wpadminbar .shortlink-input {
+	 background: #91288e;
+}
+#wpadminbar .quicklinks .menupop ul.ab-sub-secondary, #wpadminbar .quicklinks .menupop ul.ab-sub-secondary .ab-submenu {
+   background: #711f6e;
+}
+#wp-admin-bar-bp-notifications {
+	border-radius: 0 0 0 10px;
+}
+
+/**************************/
+/* Affichage des messages */
+/**************************/
+/* Entete:  */
+body.activity ul#activity-stream li .activity-header img {
+	margin: 0 0 0 0 !important;
+	width: 30px
+}
+body.activity ul#activity-stream li.activity_update .activity-header p  {
+	font-size: 0px;
+}
+body.activity ul#activity-stream li.activity_update .activity-header p a {
+	line-height: 40px;
+	font-size: 18px;
+	height: 30px;
+}
+.friendship_created .activity-header p a {
+	font-weight: bold;
+}
+
+ul#activity-stream li.activity_update .activity-header p a:first-child {
+	margin-right: 40px;
+	font-size: 18px !important;
+}
+ul#activity-stream li.activity_update.recent .activity-header p a:first-child {
+	color: #4ab866 !important;
+}
+body.activity ul#activity-stream li .activity-header p a:last-child, .acomment-meta .activity-time-since {
+	font-style: italic !important;
+	font-size: 16px !important;
+	font-weight: lighter !important;
+	padding-right: 30px;
+}
+/* Cadre images & videos */
+ul#activity-stream li .activity-inner a.thickbox img {
+	border: 5px solid #efe4ef !important;
+	box-shadow: 1px 1px 2px #00000099;
+} 
+ul#activity-stream li .activity-inner iframe,
+div.mejs-container {
+	box-shadow: 1px 1px 2px #00000099;
+}
+ul#activity-stream li .activity-inner a.thickbox img:hover, 
+body.activity ul#activity-stream li .activity-inner iframe:hover,
+div.mejs-container:hover {
+	box-shadow: 1px 1px 2px 0 #91288E;
+}
+
+/* affichage des actions lors de l'édition */
+.bp-secondary-action.buddyboss_edit_activity_comment.action-save, .bp-secondary-action.buddyboss_edit_activity_cancel, .bp-secondary-action.action-edit.buddyboss_edit_activity.action-save {
+	font-size: 0% !important;
+	transition: 0s all;
+}
+.bp-secondary-action.buddyboss_edit_activity_comment.action-save::before {
+	content: 'Valider';
+	font-size: 15px;
+}
+.bp-secondary-action.action-edit.buddyboss_edit_activity.action-save::before {
+	content: 'Valider';
+	font-size: 15px;
+}
+.bp-secondary-action.buddyboss_edit_activity_cancel::before {
+	content: 'Annuler';
+	font-size: 15px;
+}
+
+
+.activity-meta a,
+.acomment-options a {
+	color: #91288e !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+	padding: 0 8px !important;
+	margin-right: 5px !important;
+}
+.activity-meta a:hover,
+.acomment-options a:hover {
+	color: black !important;
+}
+
+.activity-meta a.acomment-reply,
+.acomment-options a.acomment-reply {
+	background-image: url('http://www.eltair.org/lumiere/wp-content/uploads/2020/06/response-ico.png') !important;
+	background-size: 18px !important;
+	background-repeat: no-repeat !important;
+	background-position: left 50% !important;
+	padding-left: 28px !important;
+}
+.acomment-reply span {
+    display: none;
+}
+
+/* Style du flux */
+#activity-stream > li {
+	border-radius: 15px;
+	box-shadow: 60px 0 10px #fafafa inset;
+	margin-bottom: 15px !important;
+	border: 1px solid #eaeaea;
+}
+.activity-avatar {
+   padding-left: 5px;
+}
+.activity_update .activity-header,
+.acomment-meta {
+   color: transparent !important;
+	 font-size: 0% !important;
+}
+.acomment-meta a {
+	 font-size: 16px !important;
+}
+.acomment-meta a:first-child {
+   font-weight: bold;
+}
+.acomment-meta a:last-child {
+	padding: 2px 12px;
+}
+.activity-header a:first-child {
+   display: inline-block;
+   font-weight: bold;
+}
+.activity_update .activity-header a:last-child {
+	float: right;
+	display: block;
+	font-style: italic;
+	padding: 2px 12px;
+	border-radius: 5px 0 0 15px;
+	font-size: 18px !important;
+	line-height: 30px !important;
+	box-shadow: 0 -6px 10px -10px #b8b9b8 inset;
+}
+body.groups .activity_update .activity-header a:not(:first-child):not(:last-child) {
+   display: none;
+}
+
+#buddypress div.activity-meta {
+    margin: 12px 0 12px;
+}
+
+#buddypress div.activity-comments ul li {
+    border-top: 1px solid #eee !important;
+    padding: 20px 0 0;
+}
+#buddypress div.activity-comments div.acomment-content {
+	font-size: 80%;
+	margin: 5px 10px 0 40px;
+	text-align: justify;
+}
+#buddypress .activity-list .activity-content .activity-inner {
+	margin: 0 10px 5px 0;
+	overflow: hidden;
+	text-align: justify;
+	font-size: 16px;
+}
+#buddypress .activity-header {
+	margin-right: 0;
+}
+#buddypress div.activity-comments div.acomment-meta {
+	color: #767676;
+	font-size: 90%;
+}
+#buddypress a.activity-time-since {
+	color: #444;
+	text-decoration: none;
+}
+
+/* flux d'activité : forcer l'affichage des commentaires cachés */
+li[id^="acomment-"] {
+	display: block !important;
+}
+li.show-all {
+	display: none;
+}
+
+/* flux d'activité : suppression de l'onglet "Citation" */
+#activity-mentions {
+	display: none;
+}
+
+/* flux d'activité : suppression de l'onglet "Amis" */
+#activity-friends {
+	display: none;
+}
+/* flux d'activité : suppression de l'onglet "Messages Publiques" */
+#activity-all a {
+	font-size: 0%;
+	line-height: 30px;
+}
+#activity-all a span {
+	font-size: 12px !important;
+}
+#activity-all a::before {
+	content: 'Messages publics';
+	font-size: 18px;
+	float: left;
+}
+/* Supression du choix du filtre sur la page des Messages */
+.directory.activity #activity-filter-select {
+	display: none;
+}
+#buddypress ul.item-list {
+	border: none;
+}
+
+/*****************/
+/* page articles */
+/*****************/
+img.wp-post-image {
+	box-shadow: 1px 1px 3px 0 #000000;
+}
+img.wp-post-image:hover {
+	box-shadow: 1px 1px 3px 0 #91288E;
+}
+
+/********************/
+/* Couleur Menu top */
+/********************/
+#nav-header .nav li a {
+    font-size: 20px;
+    font-weight: 500;
+    font-variant: small-caps;
+    color: #FBF5D1 !important;
+}
+
+/*******************/
+/* Background page */
+/*******************/
+div.main-inner {
+	background: white !important;
+	background-image: url('http://www.eltair.org/lumiere/wp-content/uploads/2019/01/galaxy_fond.png') !important;
+	background-position: -300px -280px !important;
+	background-repeat: no-repeat !important;;
+}
+div.sidebar.collapsed div.sidebar-content{
+	background: transparent !important;
+}
+div.sidebar {
+}
+section.content {
+	background: transparent !important;
+	/*box-shadow: inset 0px 0px 20px #91288e54;*/
+}
+/******************/
+/* Page d'Accueil */
+/******************/
+body.page-id-1111 .page-title {
+	display: none;
+}
+body.page-id-1111 section.content {
+	min-height: 800px;
+}
+body.page-id-1111 section.content .title-message {
+}
+body.page-id-1111 div.image-accueil img {
+  z-index: -1;
+	position: relative;
+  display: block;
+}
+div.box-shadow-white {
+  z-index: 0;
+	position: relative;
+  overflow: hidden;
+}
+div.box-shadow-white::after {
+	-webkit-box-shadow: inset 0px 0px 40px 0px white;
+	-moz-box-shadow: inset 0px 0px 40px 0px white;
+	box-shadow: inset 0px 0px 40px 60px white;
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+	border-radius: 50%;
+}
+/**********************************/
+/* Widget menu des groups récents */
+/**********************************/
+.menu-groups, .menu-article {
+	border: 1px solid #eaeaea;
+	padding: 15px 20px !important;
+	margin-left: 20px;
+	border-radius: 20px;
+	transition: 0.3s all ease-in-out;
+	max-height: 2000px;
+	box-shadow: 0 40px 10px #fafafa inset;
+}
+.menu-groups:not(:hover) {
+	max-height: 295px;
+	mask: linear-gradient(rgba(0,0,0,1) 0%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
+}
+.menu-groups .item-list > li:hover {
+	margin-left: 5px;
+}
+.menu-groups .item-list > li {
+	transition: 0.3s all ease-in-out;
+}
+.menu-groups a {
+	color: #91288e;
+	transition: 0.2s all ease-in-out;
+}
+.menu-groups .item-options {
+	display: none;
+}
+.menu-article a {
+	color: #91288e;
+}
+.menu-article li {
+	border: none !important;
+}
+.menu-article {
+	margin-bottom: 20px;
+}
+}
+/**********/
+/* Divers */
+/**********/
+.recent .time-since {
+	color: #4ab866 !important;
+}
+.recent .acomment-meta > a:first-child {
+	color: #4ab866 !important;
+}
+.recent .acomment-content {
+	border-left: 4px solid #ddf6e2;
+}
+.acomment-content {
+	border-left: 4px solid #fafafa;
+	padding: 5px;
+	padding-left: 15px;
+}
+.entry h2 {
+	font-size: 1.2em !important;
+}
+.entry h3 {
+	font-size: 1.2em !important;
+}
+
+body.activity ul#activity-stream li .activity-inner .activity-inner {
+	text-align: justify;
+}
+#search-members-form input {
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+-moz-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+    box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+}
+#search-members-form label > input {
+	display: inline-block;
+	-webkit-box-shadow: inset 1px 1px 3px rgba(0,0,0,.4);
+-moz-box-shadow: inset 1px 1px 3px rgba(0,0,0,.4);
+	box-shadow: inset 1px 1px 3px rgba(0,0,0,.4);
+}
+#search-members-form input {
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+-moz-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+    box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+}
+#search-members-form label {
+	font-weight: 400;
+}
+#buddypress .comment-reply-link, 
+#buddypress .generic-button a, 
+#buddypress .standard-form button, #buddypress a.button, 
+#buddypress input[type=button], 
+#buddypress input[type=reset], 
+#buddypress input[type=submit], 
+#buddypress ul.button-nav li a, 
+a.bp-title-button {
+  background: #fff;
+  border: 1px solid #fff !important;
+  color: #767676;
+  font-size: 80%;
+  cursor: pointer;
+  outline: 2;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+}
+
+#footer-bottom #back-to-top {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+	width: 100px;
+	border-radius: 5px 5px 0 0;
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.4);
+	
+  box-shadow: 0px 0px 10px rgba(0,0,0,.4);
+}
+.sharrre-container {display: none;}
+
+#buddypress .activity-list li.mini .activity-avatar img.avatar {
+	margin-top: 10px;
+}
+
+/****************************************************************/
+/* Historique des messages */
+/****************************************************************/
+#history-wrapper {
+	position: sticky;
+	top: 0;
+	left: 0;
+	background: white;
+	z-index: 100;
+	opacity: 1;
+	text-align: center;
+	transition: 0.2s all ease-in-out, 0s border-radius;
+	border-radius: 0 0 10px 0;
+	width: 350px;
+	height: 1px;
+	/* box-shadow: 5px 0px 5px -5px gray, -5px 0 5px inset #cab5cc4d; */
+	box-shadow: 0px 10px 10px -10px #91288E inset;
+	display: flex;
+}
+#history-wrapper:not(.on) {
+	background: transparent;
+	box-shadow: none;
+}
+body.message-menu-mini-mode #history-wrapper:not(.on) > * {
+	margin: 10px;
+	box-shadow: 0 0 10px 5px white;
+	border-radius: 20px;
+}
+
+#menu-recent {
+	position: absolute;
+	left: 0;
+	bottom: -39px;
+	width: 345px !important;
+	max-width: 100vw;
+	background: #ffffffff;
+	z-index: 150;
+	max-height: calc(100vh - 50px);
+	min-height: 40vh;
+	font-size: 14px;
+	box-shadow: 5px -5px 10px -10px black;
+	border-radius: 9px;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	transform: translateY(100%);
+	transition: 0.3s all ease-in-out;
+}
+:not(.on) > #menu-recent {
+	transform: translateY(100%) translatex(-200%);
+	opacity: 0;
+}
+#menu-recent > * {
+	padding: 0 20px 0 60px;
+	text-align: left;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: 0.3s all ease-in-out;
+	position: relative;
+	background-repeat: no-repeat !important;
+	background-size: 50px !important;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
+#menu-recent > ::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: transparent;
+	content: '';
+	width: 100%;
+	height: 100%;
+}
+#menu-recent > :hover {
+	padding: 0 10px 0 65px;
+}
+#menu-recent > :hover > * {
+	color: #91288e !important;
+}
+#menu-recent > .recent:hover > * {
+	color: #4ab866 !important;
+}
+#menu-recent > :nth-child(2n) {
+	background: #91288e0a;
+	box-shadow: 0 5px 5px -5px #ccc inset, 5px 0 0 #91288e inset;
+}
+#menu-recent > :nth-child(2n+1) {
+	box-shadow: 0 5px 5px -5px #ccc inset, 5px 0 0 #c084be inset;
+}
+#menu-recent > :nth-child(2n).recent {
+	box-shadow: 0 5px 5px -5px #ccc inset, 5px 0 0 #4ab866 inset;
+}
+#menu-recent > :nth-child(2n+1).recent {
+	box-shadow: 0 5px 5px -5px #ccc inset, 5px 0 0 #acdbb2 inset;
+}
+#menu-recent > * > * {
+	line-height: 25px;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
+#menu-recent > * > .author {
+	font-weight: bold;
+	color: #777;
+	flex: 1 0 49% !important;
+}
+#menu-recent > :hover > .author {
+	box-shadow: -10px 0 10px #f2ebf2, -10px 0 10px #f2ebf2;
+	background: #f2ebf2;
+}
+#menu-recent > * > .date {
+	font-style: italic;
+	color: #555;
+	text-align right
+	flex: 1 0 49%;
+}
+#menu-recent > :hover > .date {
+	box-shadow: 10px 0 10px #f2ebf2, 10px 0 10px #f2ebf2;
+	background: #f2ebf2;
+}
+body.no-date #menu-recent > * > .date, 
+body:not(.no-date) #menu-recent > * > .since {
+	display: none;
+	
+}
+#menu-recent > * > .since {
+	font-style: italic;
+	color: #555;
+	text-align right
+	flex: 1 0 49%;
+}
+#menu-recent > :hover > .since {
+	box-shadow: 10px 0 10px #f2ebf2, 10px 0 10px #f2ebf2;
+	background: #f2ebf2;
+}
+#menu-recent > * > .message {
+	color: #777;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	mask: linear-gradient(90deg, black, transparent);
+	flex: 1 0;
+	max-width:60%;
+}
+#menu-recent > .comment-event > .message {
+	mask: linear-gradient(90deg, black 90%, transparent);
+}
+#menu-recent [flag="group"] {
+	display: none;
+}
+#menu-recent .activity-event .message::before {
+	content: '';
+	width: 17px;
+	height: 100%;
+	mask: url('http://www.eltair.org/lumiere/wp-content/uploads/2020/06/enveloppe.png');
+	display: inline-block;
+	mask-size: contain;
+	mask-position: center center;
+	float: left;
+	margin-right: 5px;
+	mask-repeat: no-repeat;
+	background: #a8aaa8;
+}
+#menu-recent .comment-event .message::before {
+	content: '';
+	width: 17px;
+	height: 100%;
+	mask: url('/lumiere/wp-content/uploads/2020/06/response_recent.png');
+	display: inline-block;
+	mask-size: contain;
+	mask-position: center center;
+	float: left;
+	margin-right: 5px;
+	mask-repeat: no-repeat;
+	background: #a8aaa8;
+	opacity: 0.8;
+}
+#menu-recent .recent:hover .message::before {
+	background: #4ab866;
+}
+#menu-recent :not(.recent):hover .message::before {
+	background: #862583;
+}
+
+
+body.activity #menu-recent [flag="group"] {
+	display: block;
+	color: gray !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 5px !important;
+	flex: 1;
+	background: #f2e9e2;
+	margin: 5px 0;
+	max-height: 14px !important;
+	line-height: 14px;
+	border-radius: 5px;
+	font-size: 12px;
+	text-align: center;
+	opacity: 0.6;
+}
+body.activity #menu-recent :hover [flag="group"] {
+	opacity: 1;
+}
+#not-recent-title {
+	box-shadow: 0 5px 5px -5px #9d9d9d inset !important;
+	background: linear-gradient(90deg, #91288e6e, white);
+	background-size: contain !important;
+	font-style: italic;
+	color: #444;
+}
+#history-btn {
+	position: sticky;
+	bottom: 5px;
+	left: 5px;
+	background: #91288e;
+	z-index: 100;
+	cursor: pointer;
+	text-align: left;
+	line-height: 40px;
+	box-shadow: 5px 0px 10px -5px #91288E, -5px -5px 8px -5px #00000082 inset;
+	height: 40px;
+	padding-left: 40px;
+	border-radius: 0 0 20px 20px;
+	color: white;
+	width: 160px;
+}
+#history-btn:hover {
+	opacity: 1;
+	background: rgb(130, 36, 128);
+}
+#history-btn.on {
+	opacity: 1;
+	color: white;
+	width: 180px;
+	border-radius: 0 0 25px 25px;
+}
+#history-btn::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 40px;
+	width: 40px;
+	background-image: url('http://www.eltair.org/lumiere/wp-content/uploads/2020/06/history.png');
+	background-repeat: no-repeat;
+	background-size: 28px;
+	background-position: center;
+	border-radius: 50%;
+}
+.on #history-closer {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 11px;
+	right: -10px;
+	background: url('http://www.eltair.org/lumiere/wp-content/uploads/2020/06/close-button.png');
+	transform: translateX(110px);
+	border-radius: 50%;
+	background-size: 36px;
+	background-position: center center;
+	display: none;
+}
+
+#history-counter {
+	display: inline-block;
+	border-radius: 50%;
+	color: #388e4e;
+	background: #addab3;
+	height: 15px;
+	padding: 2px;
+	min-width: 15px;
+	margin-left: 5px;
+	line-height: 15px;
+	font-size: 12px;
+	text-align: center;
+	pointer-events: none;
+}
+
+@media (max-width: 959px) {
+  #menu-recent {
+	  max-height: calc(60vh - 50px)!important;
+	  width: 100vw !important;
+  }
+}
+@media (max-width: 719px) {
+  #menu-recent {
+	  max-height: calc(60vh - 50px)!important;
+	  width: 100vw !important;
+  }
+}
+#history-counter-msg {
+	margin-left: 10px;
+	margin-right: 10px;
+	background: url('/lumiere/wp-content/uploads/2020/06/enveloppe_recent.png') !important;
+	padding-right: 26px;
+	display: inline-block;
+	background-position: calc(100% - 5px) 15px !important;
+	background-repeat: no-repeat !important;
+	background-size: 18px !important;
+	/* padding-top: 3px; */
+	height: 24px;
+	font-size: 13px;
+	color: #388e5d;
+	padding-top: 10px;
+	text-align: center;
+	vertical-align: top;
+	cursor: default;
+	background-color: white !important;
+	margin: 0 !important;
+	padding: 10px 30px 5px 10px !important;
+	mask: linear-gradient(transparent, transparent 20%, black 25%, black 90%, transparent);
+}
+#history-counter-comment {
+	margin-left: 10px;
+	margin-right: 10px;
+	background: url('/lumiere/wp-content/uploads/2020/06/response_recent-1.png') !important;
+	padding-right: 26px;
+	display: inline-block;
+	background-position: calc(100% - 5px) 13px !important;
+	background-repeat: no-repeat !important;
+	background-size: 18px !important;
+	/* padding-top: 3px; */
+	height: 24px;
+	font-size: 13px;
+	color: #388e5d;
+	padding-top: 10px;
+	text-align: center;
+	vertical-align: top;
+	cursor: default;
+	background-color: white !important;
+	margin: 0 !important;
+	padding: 10px 30px 5px 10px !important;
+	mask: linear-gradient(transparent, transparent 20%, black 25%, black 90%, transparent);
+}
+
+/********************************************/
+/* Configuration de l'affichage des message */
+/********************************************/
+#message-config-btn {
+	position: relative;
+	z-index: 10000;
+	width: 40px;
+	height: 40px;
+	color: lightgray;
+	text-shadow: 0 0 1px black;
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+}
+#message-config-btn:hover {
+	color: gray;
+}
+#message-config-btn::before {
+	content: "\f111";
+	font-family: dashicons;
+	display: inline;
+	line-height: 40px;
+	font-weight: 400;
+	font-style: normal;
+	speak: none;
+	text-decoration: inherit;
+	text-transform: none;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	width: 100%;
+	height: 100%;
+	font-size: 22px;
+	vertical-align: top;
+	text-align: center;
+	transition: color .1s ease-in;
+}
+#message-config-menu {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transform: translateY(100%);
+	min-width: 350px;
+	background: red;
+	text-align: left;
+	border-radius: 5px;
+	display: flex;
+	flex-flow: column;
+	background: white;
+	border: 1px solid #ca98c9;
+	box-shadow: 0 0 5px #00000069, 4px 0 0 inset #91288e;
+	text-shadow: none;
+	color: #444;
+	font-size: 14px;
+	transition: 0.2s all ease-in-out;
+	overflow: hidden;
+}
+:not(.on) > #message-config-menu {
+	max-height: 0;
+	opacity: 0;
+}
+.on > #message-config-menu {
+	max-height: 1000px;
+	opacity: 1;
+}
+
+#message-config-btn > * {
+	cursor: default;
+}
+#message-config-menu > .message-config-menu-item {
+	position: static;
+	flex: 1;
+	padding: 10px 10px 10px 20px;
+	display: flex;
+	min-height: 30px !important;
+	box-shadow: 0 0 2px #91288e70;
+	margin-left:4px;
+	cursor: pointer;
+}
+#message-config-menu > .message-config-menu-item:hover {
+	background: #faedfe;
+}
+#message-config-menu > .message-config-menu-item > :last-child {
+	flex: 0;
+	height: 20px;
+	line-height: 20px;
+	margin: auto;
+	margin-right: 20px;
+}
+#message-config-menu > .message-config-menu-item > label {
+	font-style: italic;
+	pointer-events: none;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+	padding-right: 30px;
+}
+#message-config-menu > .message-config-menu-item b {
+	font-weight: normal;
+	color: #ae2daa;
+}
+#message-config-menu > #message-config-menu-title {
+	font-weight: bold;
+	padding: 10px 20px;
+}
+#message-config-menu-close-btn {
+	margin: 10px;
+	padding: 2px 10px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px -2px #631b61;
+	display: block;
+	margin-left: auto;
+	background: #91288e;
+	color: white;
+	cursor: pointer;
+}
+#message-config-menu-close-btn:hover {
+	background: #762074;
+}
+
+/************************************************/
+/* positionnement à droite du menu des messages */
+/************************************************/
+body.message-menu-position-alt #history-wrapper {
+	left: 100% !important;
+	flex-flow: row-reverse;
+}
+body.message-menu-position-alt :not(.on) > #menu-recent {
+	transform: translateY(100%) translatex(200%) !important;
+	opacity: 0;
+}
+body:not(.message-menu-position-alt) .sidebar-content {
+	padding-top: 40px;
+}
+body.message-menu-position-alt #message-config-menu {
+	left: unset;
+	right: 0;
+}
+
+body.message-menu-mini-mode #history-wrapper:not(.on) > * {
+	display: none;
+}
+body.message-menu-mini-mode #history-wrapper:not(.on) > #history-btn {
+	display: block;
+	transition: 0.2s width ease-in-out;
+	width: 1px;
+	border-radius: 20px;
+}
+body.message-menu-mini-mode #history-wrapper:not(.on) > #history-btn:hover {
+	width: 160px;
+}
+body.message-menu-position-alt.message-menu-mini-mode  #history-wrapper:not(.on) > #history-btn {
+	left: 100%;
+}
+
+
+/*****************/
+/* Ripple effect */
+/*****************/
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.ripple:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 15%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .5s, opacity 1s;
+}
+
+.ripple:active:after {
+  transform: scale(0, 0);
+  opacity: .1;
+  transition: 0s;
+}
+
+/**************/
+/* iframe msg */
+/**************/
+body.in-iframe > :not(#wrapper),
+body.in-iframe > #wrapper > :not(#page) {
+	display: none;
+}
+body.in-iframe > #wrapper {
+	top: 0 !important;
+}
+body.in-iframe #page {
+	margin-top: 0 !important;
+}
+body.in-iframe .main-inner.group,
+body.in-iframe .hu-pad.group {
+	background: none !important;
+	padding: 0 !important;
+}
+
+/********************************/
+/* TinyMCE style : post message */
+/********************************/
+#whats-new-textarea .mce-toolbar-grp > .mce-container-body {
+	display: flex;
+	flex-flow: row;
+}
+#whats-new-textarea .mce-toolbar-grp > .mce-container-body > .mce-toolbar:last-child {
+	flex: 1;
+	display: flex;
+	flex-flow: row-reverse;
+}
+#whats-new-textarea .mce-toolbar-grp > .mce-container-body > .mce-toolbar:not(:first-child) {
+	margin-left: 20px;
+}
+#whats-new-textarea .wp-editor-tabs,
+#whats-new-textarea .mce-path {
+	display: none;
+}
+
+
+/**********************************************/
+/* Affichage des dates en entête des messages */
+/**********************************************/
+body:not(.no-date) .time-since,
+body.no-date .time-date {
+	display: none;
+}
+
