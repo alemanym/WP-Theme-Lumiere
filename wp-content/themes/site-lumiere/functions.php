@@ -197,7 +197,7 @@ function bp_insert_activity_meta_CUSTOM( $content = '' ) {
 			$activity_permalink,
 			esc_attr__( 'View Discussion', 'buddypress' ),
 			$time_since,
-			format_date_CUSTOM(convertDateIso8601WithTimezone(bp_core_get_iso8601_date( $activities_template->activity->date_recorded ))),
+			format_date_CUSTOM(convertDateIso8601WithTimezone(bp_core_get_iso8601_date( $activities_template->activity->date_recorded )))
 		);
 
 		/**
