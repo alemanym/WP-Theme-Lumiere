@@ -19,24 +19,76 @@ add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
 
 function add_theme_scripts() {
 
+	// -------------------- CSS libraries --------------------//
+	// material design icons
 	wp_enqueue_style( 'material-design-style',
-					get_stylesheet_directory_uri() .'/css/lib/material-components-web.min.css',
+					get_stylesheet_directory_uri() .'/lib/material-design/material-components-web.min.css',
 					array(),
 					null,
 					'all');
+	// material design CSS
 	wp_enqueue_style( 'material-design-icon', 
-					get_stylesheet_directory_uri() .'/css/lib/material-icon.css', 
+					get_stylesheet_directory_uri() .'/lib/material-design/material-icon.css', 
 					array(),
 					null,
 					'all');
+	// trumbowyg design CSS
+	wp_enqueue_style( 'trumbowyg-style', 
+					get_stylesheet_directory_uri() .'/lib/trumbowyg/ui/trumbowyg.min.css', 
+					array(),
+					null,
+					'all');
+	wp_enqueue_style( 'trumbowyg-emoji-style', 
+					get_stylesheet_directory_uri() .'/lib/trumbowyg/plugins/emoji/ui/trumbowyg.emoji.min.css',
+					array(),
+					null,
+					'all');
+	wp_enqueue_style( 'trumbowyg-colors-style', 
+					get_stylesheet_directory_uri() .'/lib/trumbowyg/plugins/colors/ui/trumbowyg.colors.min.css',
+					array(),
+					null,
+					'all');
+
+	// -------------------- JS libraries --------------------//
+	// material design script
 	wp_enqueue_script('material-design-js', 
-						get_stylesheet_directory_uri() .'/js/lib/material-components-web.min.js',
+						get_stylesheet_directory_uri() .'/lib/material-design/material-components-web.min.js',
 						array(),
 						null,
 						true);
+	// trumbowyg script (rich text)
+	wp_enqueue_script('trumbowyg',
+						get_stylesheet_directory_uri() .'/lib/trumbowyg/trumbowyg.min.js',
+						array('jquery'),
+						null,
+						false);
+	wp_enqueue_script('trumbowyg-lang-fr',
+						get_stylesheet_directory_uri() .'/lib/trumbowyg/langs/fr.min.js',
+						array('trumbowyg'),
+						null,
+						false);
+	wp_enqueue_script('trumbowyg-emoji',
+						get_stylesheet_directory_uri() .'/lib/trumbowyg/plugins/emoji/trumbowyg.emoji.min.js',
+						array('trumbowyg'),
+						null,
+						false);
+	wp_enqueue_script('trumbowyg-colors',
+						get_stylesheet_directory_uri() .'/lib/trumbowyg/plugins/colors/trumbowyg.colors.min.js',
+						array('trumbowyg'),
+						null,
+						false);
+
+	// -------------------- JS custom --------------------//
+	// custom script about buddy message menu
 	wp_enqueue_script('message-menu',
 						get_stylesheet_directory_uri() .'/js/message-menu.js',
-						array('material-design-js'),
+						array('jquery', 'material-design-js'),
+						null,
+						true);
+	// custom script to apply rich textarea style (post and edit message editor)
+	wp_enqueue_script('rich-text-editor',
+						get_stylesheet_directory_uri() .'/js/rich-text-decorator.js',
+						array('jquery', 'trumbowyg'),
 						null,
 						true);
 						
@@ -44,6 +96,66 @@ function add_theme_scripts() {
 add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 
 
+/****************************** CUSTOM : enable the HTML in BP activity content *******************************/
+
+
+#*********************************************************
+#  set allowable html tags
+#*********************************************************
+
+function allowTag($tag, $attributes = []) {
+	global $allowedtags;
+	$attrArray['style'] = true;
+	$attrArray['class'] = true;
+	foreach ($attributes as &$attr) {
+		$attrArray[$attr] = true;
+	}
+	$allowedtags[$tag] = $attrArray;
+}
+function my_allowed_tags() {
+	global $allowedtags;
+	$allowedtags = [];
+	allowTag('p');
+	allowTag('span');
+	allowTag('a', ['href', 'title']);
+	allowTag('img', ['src', 'alt', 'width']);
+	allowTag('b');
+	allowTag('i');
+	allowTag('em');
+	allowTag('strong');
+	allowTag('blockquote', ['cite']);
+	allowTag('cite');
+	allowTag('code');
+	allowTag('pre');
+	allowTag('del', ['datetime']);
+	allowTag('q');
+	allowTag('strike');
+	allowTag('sub');
+	allowTag('sup');
+	allowTag('h1');
+	allowTag('h2');
+	allowTag('h3');
+	allowTag('h4');
+	allowTag('hr');
+	allowTag('u');
+	allowTag('center');
+	allowTag('big');
+	allowTag('tt');
+	allowTag('br');
+	allowTag('dl');
+	allowTag('dt');
+	allowTag('dd');
+	allowTag('ul');
+	allowTag('li');
+	allowTag('ol');
+	allowTag('font', ['size', 'color', 'face']);
+	allowTag('strong');
+	allowTag('strong');
+	allowTag('strong');
+	allowTag('strong');
+	allowTag('strong');
+}
+add_action( 'bp_activity_allowed_tags', 'my_allowed_tags', 1 );
 
 /****************************** CUSTOM Activity header *******************************/
 
@@ -197,7 +309,11 @@ function bp_insert_activity_meta_CUSTOM( $content = '' ) {
 			$activity_permalink,
 			esc_attr__( 'View Discussion', 'buddypress' ),
 			$time_since,
-			format_date_CUSTOM(convertDateIso8601WithTimezone(bp_core_get_iso8601_date( $activities_template->activity->date_recorded )))
+			format_date_CUSTOM(
+				convertDateIso8601WithTimezone(
+					bp_core_get_iso8601_date( $activities_template->activity->date_recorded )
+				)
+			)
 		);
 
 		/**
@@ -249,4 +365,20 @@ function bp_comment_action_CUSTOM() {
 add_action( 'display_custom_comment_header', 'bp_comment_action_CUSTOM' );
 
 
-	
+/*-----------------------------------------------------------*/
+// Asgaros forum : auto subscription
+/*-----------------------------------------------------------*/
+/*
+add_action('user_register', array($this, 'change_subscription_settings'), 10, 1);
+function change_subscription_settings($user_id) {
+	update_user_meta($user_id, 'asgarosforum_subscription_global_posts', 1);
+	delete_user_meta($user_id, 'asgarosforum_subscription_global_topics');
+}
+
+
+function do_something($user_id, $usergroup_id) {
+	do_something_with_user($user_id);
+	do_something_else($user_id, $usergroup_id);
+}
+add_action('asgarosforum_usergroup_57_add_user', 'do_something', 10, 2);
+*/

@@ -1,4 +1,3 @@
-
 if (localStorage.getItem('display-message-date') === 'false') {
 	document.body.classList.add('no-date');
 }
@@ -7,6 +6,9 @@ if (localStorage.getItem('message-menu-position-alt') === 'true') {
 }
 if (localStorage.getItem('message-menu-mini-mode') === 'true') {
 	document.body.classList.add('message-menu-mini-mode');
+}
+if (localStorage.getItem('message-editor-legacy') !== 'false') {
+	document.body.classList.add('editor-legacy');
 }
 
 function doWhenChildCreated(root, callback) {
@@ -58,9 +60,14 @@ function decorate() {
 }
 
 var bp = document.getElementById('buddypress');
-var activities = bp.querySelector('.activity');
-doWhenChildCreated(activities, decorate);
-decorate();
+var activities = null;
+if (bp) {
+	bp.querySelector('.activity');
+	if (activities) {
+		doWhenChildCreated(activities, decorate);
+		decorate();
+	}
+}
 
 
 
@@ -180,6 +187,16 @@ function buildMessageConfigBtn() {
 													}
 												});
 	
+	let legacyModeItem = buildConfigItem('Garder l\'ancien <b>éditeur de message</b> sans outils de mise en forme<br>(permet les copier-coller word)', 
+										     'message-editor-legacy', true, 
+											 (isEnabled) => {
+													if (isEnabled) {
+														document.body.classList.add('editor-legacy');
+													} else {
+														document.body.classList.remove('editor-legacy');
+													}
+												});
+	
 	let dateActivationItem = buildConfigItem('Afficher la <b>date des messages</b><br/>(heure de française pour le moment)', 
 										     'display-message-date', true, 
 											 (isEnabled) => {
@@ -208,6 +225,7 @@ function buildMessageConfigBtn() {
 
     menuDiv.appendChild(title);
     menuDiv.appendChild(miniModeItem);
+    menuDiv.appendChild(legacyModeItem);
     menuDiv.appendChild(dateActivationItem);
     menuDiv.appendChild(menuPositionItem);
     menuDiv.appendChild(menuClickBehaviorItem);
@@ -289,7 +307,9 @@ function generateHistory() {
         row.setAttribute('data-id', temp);
 
         let avatarImg = activity.querySelector('.activity-avatar img');
-        row.style.backgroundImage = "url('" + avatarImg.src + "')";
+        let avatarImgDiv = createCustomElement('div');
+        avatarImgDiv.className = 'event-avatar';
+        avatarImgDiv.style.backgroundImage = "url('" + avatarImg.src + "')";
 
         let groupName = null;
         if (activity.classList.contains('groups')) {
@@ -306,6 +326,7 @@ function generateHistory() {
         row.appendChild(dateDiv);
         row.appendChild(sinceDiv);
         row.appendChild(messageDiv);
+		row.appendChild(avatarImgDiv);
 
         if (groupName) {
             let groupDiv = createCustomElement('div');
@@ -380,12 +401,15 @@ function generateHistory() {
             row.setAttribute('data-id', temp);
 
             let avatarImg = comment.querySelector('.acomment-avatar img');
-            row.style.backgroundImage = "url('" + avatarImg.src + "')";
+			let avatarImgDiv = createCustomElement('div');
+			avatarImgDiv.className = 'event-avatar';
+			avatarImgDiv.style.backgroundImage = "url('" + avatarImg.src + "')";
 
             row.appendChild(authorDiv);
             row.appendChild(dateDiv);
             row.appendChild(sinceDiv);
             row.appendChild(messageDiv);
+            row.appendChild(avatarImgDiv);
 
             if (groupName) {
                 let groupDiv = createCustomElement('div');
@@ -439,8 +463,6 @@ function generateHistory() {
 
     wrapper.appendChild(root);
 
-    var counterDiv = document.getElementById('history-counter');
-    counterDiv.innerHTML = counter;
     var counterMsgDiv = document.getElementById('history-counter-msg');
     counterMsgDiv.innerHTML = counterMsg;
     var counterComDiv = document.getElementById('history-counter-comment');
@@ -468,13 +490,11 @@ function createHistoryBtn(isActivated, isExpanded) {
         wrapper.classList.add('on');
     }
 
-    var counter = createCustomElement('span', 'history-counter');
-    counter.title = 'Messages postés aujourd\'hui';
     var counterMsg = createCustomElement('span', 'history-counter-msg');
+    counterMsg.title = 'Messages postés aujourd\'hui';
     var counterCom = createCustomElement('span', 'history-counter-comment');
-    counterCom.title = 'Réponse postées aujourd\'hui';
+    counterCom.title = 'Réponses postées aujourd\'hui';
 
-    btn.appendChild(counter);
     wrapper.appendChild(buildMessageConfigBtn());
     wrapper.appendChild(btn);
     wrapper.appendChild(counterMsg);
@@ -485,34 +505,45 @@ if (window.self == window.top && document.body.querySelector('#buddypress .activ
     var autoDisplayEnabled = (localStorage.getItem('auto-display-message-menu') === 'true');
     createHistoryBtn(autoDisplayEnabled, true);
     generateHistory();
+	window.addEventListener('scroll', function (e) {
+		computeMaxHeightRecentMenu();
+	});
 }
-doWhenChildCreated(activities, () => {
-    if (window.self != window.top) {
-        return;
-    }
-    var history = document.getElementById('menu-recent');
-    var wrapper = document.getElementById('history-wrapper');
-
-    if (document.body.querySelector('#buddypress .activity .activity_update')) {
-        if (!wrapper) {
-            createHistoryBtn(false);
-        }
-    } else if (wrapper) {
-        page.removeChild(wrapper);
-    }
+if (window.self == window.top && document.body.querySelector('#buddypress .activity')) {
+    var autoDisplayEnabled = (localStorage.getItem('auto-display-message-menu') === 'true');
+    createHistoryBtn(autoDisplayEnabled, true);
     generateHistory();
-});
+	window.addEventListener('scroll', function (e) {
+		computeMaxHeightRecentMenu();
+	});
+	
+}
+if (activities) {
+	doWhenChildCreated(activities, () => {
+		if (window.self != window.top) {
+			return;
+		}
+		var history = document.getElementById('menu-recent');
+		var wrapper = document.getElementById('history-wrapper');
 
-window.addEventListener('scroll', function (e) {
-    computeMaxHeightRecentMenu();
-});
+		if (document.body.querySelector('#buddypress .activity .activity_update')) {
+			if (!wrapper) {
+				createHistoryBtn(false);
+			}
+		} else if (wrapper) {
+			page.removeChild(wrapper);
+		}
+		generateHistory();
+	});
+}
+
 
 var offset = null;
 var paddingTop = page.offsetTop;
 function computeMaxHeightRecentMenu(menu) {
     if (!_isDynamicResizing) return;
 
-    let reducingSize = Math.max(0, page.offsetTop - window.pageYOffset) + 40;
+    let reducingSize = Math.max(0, page.offsetTop - window.pageYOffset) + 52;
     if (offset != reducingSize) {
         if (!menu) {
             menu = document.getElementById('menu-recent');
@@ -533,4 +564,34 @@ console.log('CUSTOM SCRIPT: END END');
 if (window.self != window.top) {
     document.body.classList.add('in-iframe');
 }
+
+/***************************************************/
+/* zen button to hide left menu (for small screen)
+/***************************************************/
+var zenModeBtn = document.createElement('button');
+zenModeBtn.id = 'zen-mode-btn';
+zenModeBtn.innerHTML = 'Agrandir les messages';
+zenModeBtn.onclick = () => {
+	if (document.body.classList.contains('zen-mode')) {
+		document.body.classList.remove('zen-mode');
+		zenModeBtn.innerHTML = 'Agrandir les messages';
+	} else {
+		document.body.classList.add('zen-mode');
+		zenModeBtn.innerHTML = 'Menu Site';
+	}
+}
+document.body.appendChild(zenModeBtn);
+
+
+/***************************************************/
+/* back to top btn
+/***************************************************/
+var goTopBtn = document.createElement('button');
+goTopBtn.id = 'go-top-btn';
+goTopBtn.onclick = () => {
+	window.scroll(0, 0);
+}
+document.body.appendChild(goTopBtn);
+
+
 
