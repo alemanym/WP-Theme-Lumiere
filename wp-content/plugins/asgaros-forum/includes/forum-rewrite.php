@@ -265,12 +265,15 @@ class AsgarosForumRewrite {
         if (!$topic_id) {
             $topic_id = $this->asgarosforum->db->get_var($this->asgarosforum->db->prepare("SELECT parent_id FROM {$this->asgarosforum->tables->posts} WHERE id = %d;", $post_id));
         }
+        if (!$topic_id) {
+            return '';
+        }
 
         // Get the page of the post as well when we dont know it.
         if (!$post_page) {
             // Get all post ids of the topic.
             if (empty($this->cache_get_post_link_ids[$topic_id])) {
-                $this->cache_get_post_link_ids[$topic_id] = $this->asgarosforum->db->get_col("SELECT id FROM {$this->asgarosforum->tables->posts} WHERE parent_id = ".$topic_id." ORDER BY id ASC;");
+                $this->cache_get_post_link_ids[$topic_id] = $this->asgarosforum->db->get_col("SELECT id FROM {$this->asgarosforum->tables->posts} WHERE parent_id = ".$topic_id." ORDER BY id DESC;");
             }
 
             // Now get the position of the post.

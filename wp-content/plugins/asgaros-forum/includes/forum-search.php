@@ -123,4 +123,110 @@ class AsgarosForumSearch {
 
         return false;
     }
+
+    public function show_custom_search_results() {
+        echo '<div id="search-post-layer">';
+            $posts = $this->get_custom_search_results();
+            if (empty($posts)) {
+                $notice = __('No results found for:', 'asgaros-forum').'&nbsp;<b>'.$this->search_keywords_for_output.'</b>';
+                $this->asgarosforum->render_notice($notice);
+            } else {
+                $pagination = $this->asgarosforum->pagination->renderPagination('search');
+
+                if ($pagination) {
+                    echo '<div class="pages-and-menu">'.$pagination.'</div>';
+                }
+
+                foreach ($posts as $post) {
+                    echo '<div class="search-post-element">';
+                        echo '<div class="search-post-author">';
+                            // Show avatar if activated.
+                            if ($this->asgarosforum->options['enable_avatars']) {
+                                $avatar_size = apply_filters('asgarosforum_filter_avatar_size', 40);
+                                echo get_avatar($post->author_id, $avatar_size, '', '', array('force_display' => true));
+                            }
+
+                            echo '<div class="post-author-block-name">';
+                                // Show username.
+                                $username = apply_filters('asgarosforum_filter_post_username', $this->asgarosforum->getUsername($post->author_id), $post->author_id);
+                                echo '<span class="post-username">'.$username.'</span>';
+                            echo '</div>';
+                        echo '</div>';
+
+                        $link = $this->asgarosforum->rewrite->get_post_link($post->id, $post->parent_id);
+                        $text = $this->asgarosforum->strip_tags_content($post->text, '<blockquote>', TRUE);
+                        $text = esc_html(stripslashes(strip_tags($text)));
+                        $text = $this->asgarosforum->cut_string($text, 200);
+                        $text = str_ireplace($this->search_keywords_for_output, '<strong>'.$this->search_keywords_for_output.'</strong>', $text);
+                        echo '<a class="search-post-text" href="'.$link.'"><div>'.$text.'</div></a>';
+
+
+                        $topic_link = $this->asgarosforum->rewrite->get_link('topic', $post->parent_id);
+                        $topic_name = esc_html(stripslashes($post->name));
+                        $topic_time = $this->asgarosforum->format_date($post->date);
+
+                        echo '<div class="search-post-meta">';
+                            echo '<span class="search-post-topic">';
+                                echo 'Sujet : <a href="'.$topic_link.'">'.$topic_name.'</a>';
+                            echo '</span>';
+                            echo '<span class="search-post-time">'.$topic_time.'</span>';
+                        echo '</div>';
+                    echo '</div>';
+                }
+
+                if ($pagination) {
+                    echo '<div class="pages-and-menu">'.$pagination.'</div>';
+                }
+            }
+        echo '</div>';
+
+    }
+
+    public function get_custom_search_results() {
+
+        if (!empty($this->search_keywords_for_query)) {
+            // search key words no empty
+
+            $categories = $this->asgarosforum->content->get_categories();
+            if (empty($categories)) {
+                // Cancel if the user cant access any categories.
+                return false;
+            }
+
+            $categoriesFilter = array();
+            foreach ($categories as $category) {
+                $categoriesFilter[] = $category->term_id;
+            }
+            $accessible_categories = implode(',', $categoriesFilter);
+
+            $elements_maximum = 50;
+            $elements_start = $this->asgarosforum->current_page * $elements_maximum;
+            $query_limit = "LIMIT {$elements_start}, {$elements_maximum}";
+
+            $match_text = "MATCH (text) AGAINST ('{$this->search_keywords_for_query}*' IN BOOLEAN MODE) ";
+            $query_match_text = "SELECT * FROM {$this->asgarosforum->tables->posts} WHERE {$match_text} GROUP BY parent_id ";
+
+            $query = "SELECT p.id, p.author_id, p.text, p.date, p.parent_id, t.name ".
+                    " FROM ".
+                        "( {$query_match_text} ) AS p, ".
+                        "{$this->asgarosforum->tables->topics} AS t ".
+                    " WHERE p.parent_id = t.id ".
+                    " AND EXISTS ".
+                        "(SELECT f.id ".
+                            "FROM {$this->asgarosforum->tables->forums} AS f ".
+                            "WHERE f.id = t.parent_id ".
+                            "AND f.parent_id IN ( {$accessible_categories} )
+                        ) ".
+                    " AND t.approved = 1 ".
+                    " ORDER BY p.id DESC {$query_limit};";
+            
+            $results = $this->asgarosforum->db->get_results($query);
+
+            if (!empty($results)) {
+                return $results;
+            }
+        }
+
+        return false;
+    }
 }

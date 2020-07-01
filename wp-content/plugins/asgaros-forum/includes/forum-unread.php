@@ -68,7 +68,11 @@ class AsgarosForumUnread {
     // Marks a topic as read when an user opens it.
     public function mark_topic_read() {
         if ($this->asgarosforum->current_topic) {
-            $this->excluded_items[$this->asgarosforum->current_topic] = intval($this->asgarosforum->get_lastpost_in_topic($this->asgarosforum->current_topic)->id);
+            $lastpost_in_topic = $this->asgarosforum->get_lastpost_in_topic($this->asgarosforum->current_topic);
+            if (!$lastpost_in_topic) {
+                return;
+            }
+            $this->excluded_items[$this->asgarosforum->current_topic] = intval($lastpost_in_topic->id);
 
             if ($this->user_id) {
                 update_user_meta($this->user_id, 'asgarosforum_unread_exclude', $this->excluded_items);
@@ -236,8 +240,8 @@ class AsgarosForumUnread {
                 $topic_title = esc_html(stripslashes($topic->topic_name));
 
                 echo '<div class="content-element unread-topic topic-normal">';
-                    echo '<div class="topic-status far fa-comments unread"></div>';
-                    echo '<div class="topic-name">';
+                echo '<div class="topic-status fas fa-comments unread"></div>';
+                echo '<div class="topic-name">';
                         $first_unread_post = $this->asgarosforum->content->get_first_unread_post($topic->topic_id);
                         $link = $this->asgarosforum->rewrite->get_post_link($first_unread_post->id, $first_unread_post->parent_id);
                         $human_time_diff = sprintf(__('%s ago', 'asgaros-forum'), human_time_diff(strtotime($first_unread_post->date), current_time('timestamp')));
@@ -247,7 +251,7 @@ class AsgarosForumUnread {
                         }
 
                         if ($this->asgarosforum->is_topic_closed($topic->topic_id)) {
-                            echo '<span class="topic-icon fas fa-lock"></span>';
+                            echo '<span class="topic-icon fas fa-quote-right"></span>';
                         }
 
                         if ($this->asgarosforum->polls->has_poll($topic->topic_id)) {
