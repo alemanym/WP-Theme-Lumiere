@@ -44,7 +44,8 @@ window.FontAwesomeConfig = {
             e.preventDefault();
 
             // Hide new post/topic buttons.
-            $('a.forum-editor-button').hide();
+            // $('a.forum-editor-button').hide();
+            $('.forum-menu a').hide();
 
             $('#forum-editor-form').slideToggle(400, function() {
                 // Focus subject line or editor.
@@ -71,7 +72,8 @@ window.FontAwesomeConfig = {
             e.preventDefault();
 
             $('#forum-editor-form').slideToggle(400, function() {
-                $('a.forum-editor-button').show();
+                // $('a.forum-editor-button').show();
+                $('.forum-menu a').show();
                 $('.editor-row-subject input').val('');
 
                 if (tinyMCE.activeEditor) {
@@ -87,7 +89,8 @@ window.FontAwesomeConfig = {
             e.preventDefault();
 
             // Hide new post/topic buttons.
-            $('a.forum-editor-button').hide();
+            // $('a.forum-editor-button').hide();
+            $('.forum-menu a').show();
 
             // Build quote.
             var quoteID = $(this).attr('data-value-id');

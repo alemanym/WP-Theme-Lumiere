@@ -12,14 +12,13 @@ echo '<div class="pages-and-menu">';
     echo '<div class="clear"></div>';
 echo '</div>';
 
-echo '<div class="title-element"></div>';
+$this->editor->showEditor('addpost', true);
 
 $counter = 0;
 $topicStarter = $this->get_topic_starter($this->current_topic);
 foreach ($posts as $post) {
     require('post-element.php');
 } ?>
-<?php $this->editor->showEditor('addpost', true); ?>
 <div class="pages-and-menu">
     <?php
     echo $paginationRendering;
