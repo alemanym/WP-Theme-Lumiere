@@ -368,14 +368,15 @@ add_action( 'display_custom_comment_header', 'bp_comment_action_CUSTOM' );
 /*-----------------------------------------------------------*/
 // Asgaros forum : auto subscription
 /*-----------------------------------------------------------*/
-/*
-add_action('user_register', array($this, 'change_subscription_settings'), 10, 1);
+add_action('user_register', 'change_subscription_settings', 10, 1);
 function change_subscription_settings($user_id) {
 	update_user_meta($user_id, 'asgarosforum_subscription_global_posts', 1);
 	delete_user_meta($user_id, 'asgarosforum_subscription_global_topics');
 }
 
 
+
+/*
 function do_something($user_id, $usergroup_id) {
 	do_something_with_user($user_id);
 	do_something_else($user_id, $usergroup_id);
