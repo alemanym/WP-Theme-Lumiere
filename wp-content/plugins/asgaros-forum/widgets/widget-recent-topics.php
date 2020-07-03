@@ -61,7 +61,7 @@ class AsgarosForumRecentTopics_Widget extends WP_Widget {
 
         // Try to get forum topics.
         $number = ($instance['number']) ? absint($instance['number']) : 3;
-        $elements = $this->asgarosforum->db->get_results("SELECT p.id, p.text, p.date, p.parent_id, p.author_id, t.name, (SELECT COUNT(*) FROM {$this->asgarosforum->tables->posts} WHERE parent_id = p.parent_id) AS post_counter FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.forum_id IN({$available_forums}) AND p.id IN (SELECT MAX(p_inner.id) FROM {$this->asgarosforum->tables->posts} AS p_inner GROUP BY p_inner.parent_id) AND t.approved = 1 ORDER BY t.id DESC LIMIT {$number};");
+        $elements = $this->asgarosforum->db->get_results("SELECT p.id, p.text, p.date, p.parent_id, p.author_id, t.name, (SELECT COUNT(*) FROM {$this->asgarosforum->tables->posts} WHERE parent_id = p.parent_id) AS post_counter FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.forum_id IN({$available_forums}) AND p.id IN (SELECT MAX(p_inner.id) FROM {$this->asgarosforum->tables->posts} AS p_inner GROUP BY p_inner.parent_id) AND t.approved = 1 ORDER BY t.date DESC LIMIT {$number};");
 
         // Ensure that there are forum topics available.
         if (empty($elements)) {

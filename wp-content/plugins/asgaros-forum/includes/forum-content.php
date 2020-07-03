@@ -452,7 +452,7 @@ class AsgarosForumContent {
     }
 
     public function get_posts_by_user($user_id) {
-        return $this->asgarosforum->db->get_results($this->asgarosforum->db->prepare("SELECT p.id, p.text, p.date, p.parent_id, t.name FROM {$this->asgarosforum->tables->posts} AS p, {$this->asgarosforum->tables->topics} AS t WHERE p.author_id = %d AND p.parent_id = t.id AND t.approved = 1 ORDER BY p.id DESC;", $user_id));
+        return $this->asgarosforum->db->get_results($this->asgarosforum->db->prepare("SELECT p.id, p.text, p.date, p.parent_id, t.name FROM {$this->asgarosforum->tables->posts} AS p, {$this->asgarosforum->tables->topics} AS t WHERE p.author_id = %d AND p.parent_id = t.id AND t.approved = 1 ORDER BY p.date DESC;", $user_id));
     }
 
     public function get_first_unread_post($topic_id) {

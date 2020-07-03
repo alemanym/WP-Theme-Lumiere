@@ -1187,8 +1187,8 @@ class AsgarosForum {
         $start = $this->current_page * $this->options['posts_per_page'];
         $end = $this->options['posts_per_page'];
 
-        $order = apply_filters('asgarosforum_filter_get_posts_order', 'p1.id ASC');
-        $results = $this->db->get_results($this->db->prepare("SELECT p1.id, p1.text, p1.date, p1.date_edit, p1.author_id, p1.author_edit, (SELECT COUNT(*) FROM {$this->tables->posts} AS p2 WHERE p2.author_id = p1.author_id) AS author_posts, p1.uploads FROM {$this->tables->posts} AS p1 WHERE p1.parent_id = %d ORDER BY {$order} LIMIT %d, %d;", $this->current_topic, $start, $end));
+        $order = apply_filters('asgarosforum_filter_get_posts_order', 'p1.date DESC');
+        $results = $this->db->get_results($this->db->prepare("SELECT p1.id, p1.text, p1.date, p1.date_edit, p1.author_id, p1.author_edit, (SELECT COUNT(*) FROM {$this->tables->posts} AS p2 WHERE p2.author_id = p1.author_id) AS author_posts, p1.uploads FROM {$this->tables->posts} AS p1 WHERE p1.parent_id = %d ORDER BY p1.date DESC LIMIT %d, %d;", $this->current_topic, $start, $end));
         $results = apply_filters('asgarosforum_filter_get_posts', $results);
         return $results;
     }
@@ -1428,7 +1428,7 @@ class AsgarosForum {
 
     function get_lastpost_in_topic($topic_id) {
         if (empty($this->cache['get_lastpost_in_topic'][$topic_id])) {
-            $this->cache['get_lastpost_in_topic'][$topic_id] = $this->db->get_row("SELECT id, date, author_id, parent_id FROM {$this->tables->posts} WHERE parent_id = {$topic_id} ORDER BY id DESC LIMIT 1;");
+            $this->cache['get_lastpost_in_topic'][$topic_id] = $this->db->get_row("SELECT id, date, author_id, parent_id FROM {$this->tables->posts} WHERE parent_id = {$topic_id} ORDER BY date DESC LIMIT 1;");
         }
 
         return $this->cache['get_lastpost_in_topic'][$topic_id];
@@ -1475,7 +1475,7 @@ class AsgarosForum {
 
     function format_date($date, $full = true) {
         if ($full) {
-            return date_i18n($this->date_format.', '.$this->time_format, strtotime($date));
+            return str_replace(', ', ' &nbsp;-&nbsp; ', date_i18n($this->date_format.', '.$this->time_format, strtotime($date)));
         } else {
             return date_i18n($this->date_format, strtotime($date));
         }
@@ -1678,7 +1678,8 @@ class AsgarosForum {
                 // Quote button.
                 $menu .= '<a class="forum-editor-quote-button" data-value-id="'.$post_id.'" href="'.$this->get_link('addpost', $this->current_topic, array('quote' => $post_id)).'">';
                     $menu .= '<span class="menu-icon fas fa-quote-left"></span>';
-                    $menu .= __('Quote', 'asgaros-forum');
+                    // $menu .= __('Quote', 'asgaros-forum');
+                    $menu .= 'Répondre';
                 $menu .= '</a>';
             }
         }

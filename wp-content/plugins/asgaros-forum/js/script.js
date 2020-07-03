@@ -67,6 +67,17 @@ window.FontAwesomeConfig = {
             });
         });
 
+        // CUSTOM: toggle-rich-text
+        $('#af-wrapper .editor-row-submit a.toggle-rich-text').click(function(e) {
+            $('#af-wrapper #wp-message-editor-container .mce-top-part').toggle();
+        });
+        $('#af-wrapper .editor-row-submit a.toggle-upload').click(function(e) {
+            $(this).toggleClass('on');
+            $('#af-wrapper .editor-element .editor-row-uploads').toggleClass('on', $(this).hasClass('on'));
+        });
+
+        
+
         // Close editor.
         $('#af-wrapper .editor-row-submit a.cancel').click(function(e) {
             e.preventDefault();

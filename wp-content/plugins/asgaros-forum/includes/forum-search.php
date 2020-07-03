@@ -125,6 +125,7 @@ class AsgarosForumSearch {
     }
 
     public function show_custom_search_results() {
+		
         echo '<div id="search-post-layer">';
             $posts = $this->get_custom_search_results();
             if (empty($posts)) {
@@ -137,12 +138,13 @@ class AsgarosForumSearch {
                     echo '<div class="pages-and-menu">'.$pagination.'</div>';
                 }
 
+                $avatarsEnabled = $this->asgarosforum->options['enable_avatars'];
+                $avatar_size = apply_filters('asgarosforum_filter_avatar_size', 40);
                 foreach ($posts as $post) {
                     echo '<div class="search-post-element">';
                         echo '<div class="search-post-author">';
                             // Show avatar if activated.
-                            if ($this->asgarosforum->options['enable_avatars']) {
-                                $avatar_size = apply_filters('asgarosforum_filter_avatar_size', 40);
+                            if ($avatarsEnabled) {
                                 echo get_avatar($post->author_id, $avatar_size, '', '', array('force_display' => true));
                             }
 
@@ -199,12 +201,14 @@ class AsgarosForumSearch {
             }
             $accessible_categories = implode(',', $categoriesFilter);
 
+            $shortcodeSearchFilter = $this->asgarosforum->shortcode->shortcodeSearchFilter;
+
             $elements_maximum = 50;
             $elements_start = $this->asgarosforum->current_page * $elements_maximum;
             $query_limit = "LIMIT {$elements_start}, {$elements_maximum}";
 
             $match_text = "MATCH (text) AGAINST ('{$this->search_keywords_for_query}*' IN BOOLEAN MODE) ";
-            $query_match_text = "SELECT * FROM {$this->asgarosforum->tables->posts} WHERE {$match_text} GROUP BY parent_id ";
+            $query_match_text = "SELECT * FROM {$this->asgarosforum->tables->posts} WHERE {$match_text}";
 
             $query = "SELECT p.id, p.author_id, p.text, p.date, p.parent_id, t.name ".
                     " FROM ".
@@ -217,8 +221,8 @@ class AsgarosForumSearch {
                             "WHERE f.id = t.parent_id ".
                             "AND f.parent_id IN ( {$accessible_categories} )
                         ) ".
-                    " AND t.approved = 1 ".
-                    " ORDER BY p.id DESC {$query_limit};";
+                    " AND t.approved = 1 {$shortcodeSearchFilter}".
+                    " ORDER BY p.date DESC {$query_limit};";
             
             $results = $this->asgarosforum->db->get_results($query);
 

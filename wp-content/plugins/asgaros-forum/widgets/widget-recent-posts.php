@@ -68,7 +68,7 @@ class AsgarosForumRecentPosts_Widget extends WP_Widget {
         if ($group) {
             $post_ids = $this->asgarosforum->db->get_col("SELECT MAX(p.id) AS id FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.forum_id IN({$available_forums}) AND t.approved = 1 GROUP BY p.parent_id ORDER BY MAX(p.id) DESC LIMIT {$number};");
         } else {
-            $post_ids = $this->asgarosforum->db->get_col("SELECT p.id FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.forum_id IN({$available_forums}) AND t.approved = 1 ORDER BY p.id DESC LIMIT {$number};");
+            $post_ids = $this->asgarosforum->db->get_col("SELECT p.id FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.forum_id IN({$available_forums}) AND t.approved = 1 ORDER BY p.date DESC LIMIT {$number};");
         }
 
         // Ensure that there are forum posts available.
@@ -82,7 +82,7 @@ class AsgarosForumRecentPosts_Widget extends WP_Widget {
         $post_ids = implode(',', $post_ids);
 
         // Get post details.
-        $elements = $this->asgarosforum->db->get_results("SELECT p.id, p.text, p.date, p.parent_id, p.author_id, t.name, (SELECT COUNT(*) FROM {$this->asgarosforum->tables->posts} WHERE parent_id = p.parent_id) AS post_counter FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.id IN ({$post_ids}) ORDER BY p.id DESC;");
+        $elements = $this->asgarosforum->db->get_results("SELECT p.id, p.text, p.date, p.parent_id, p.author_id, t.name, (SELECT COUNT(*) FROM {$this->asgarosforum->tables->posts} WHERE parent_id = p.parent_id) AS post_counter FROM {$this->asgarosforum->tables->posts} AS p LEFT JOIN {$this->asgarosforum->tables->topics} AS t ON (t.id = p.parent_id) WHERE p.id IN ({$post_ids}) ORDER BY p.date DESC;");
 
         // Get options.
         $show_avatar = isset($instance['show_avatar']) ? $instance['show_avatar'] : true;

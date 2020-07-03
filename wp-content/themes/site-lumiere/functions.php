@@ -374,12 +374,10 @@ function change_subscription_settings($user_id) {
 	delete_user_meta($user_id, 'asgarosforum_subscription_global_topics');
 }
 
-
-
-/*
-function do_something($user_id, $usergroup_id) {
-	do_something_with_user($user_id);
-	do_something_else($user_id, $usergroup_id);
+/*-----------------------------------------------------------*/
+// Asgaros forum : sorting topics
+/*-----------------------------------------------------------*/
+function definePostOdering() {
+    return 'date_recorded DESC';
 }
-add_action('asgarosforum_usergroup_57_add_user', 'do_something', 10, 2);
-*/
+//add_filter( 'asgarosforum_filter_get_posts_order', 'definePostOdering' );

@@ -41,6 +41,7 @@ class AsgarosForumActivity {
             foreach ($data as $activity) {
                 $current_time = date($this->asgarosforum->date_format, strtotime($activity->date));
                 $human_time_diff = sprintf(__('%s ago', 'asgaros-forum'), human_time_diff(strtotime($activity->date), current_time('timestamp')));
+                $post_date = $this->asgarosforum->format_date($activity->date);
 
                 if ($current_time == $date_today) {
                     $current_time = __('Today', 'asgaros-forum');
@@ -63,25 +64,41 @@ class AsgarosForumActivity {
                     echo '<div class="content-container">';
                 }
 
+                $avatarsEnabled = $this->asgarosforum->options['enable_avatars'];
+                if ($avatarsEnabled) {
+                    $avatar_size = apply_filters('asgarosforum_filter_avatar_size', 20);
+                    $avatar_author = get_avatar($activity->author_id, $avatar_size, '', '', array('force_display' => true));
+                }
                 $name_author = $this->asgarosforum->getUsername($activity->author_id);
                 $name_topic = esc_html(stripslashes($activity->name));
                 $read_status = $this->asgarosforum->unread->get_status_post($activity->id, $activity->author_id, $activity->date, $activity->parent_id);
 
                 if ($this->asgarosforum->is_first_post($activity->id, $activity->parent_id)) {
                     $link = $this->asgarosforum->get_link('topic', $activity->parent_id);
-                    $link_html = '<a href="'.$link.'">'.$name_topic.'</a>';
-                    echo '<div class="content-element activity-element">';
-                    echo '<span class="activity-icon fas fa-comments '.$read_status.'"></span>';
-                    echo sprintf(__('New topic %s created by %s.', 'asgaros-forum'), $link_html, $name_author).' <i class="activity-time">'.$human_time_diff.'</i>';
-                    echo '</div>';
+                    $action = '<small>a ouvert le sujet : </small> ';
                 } else {
                     $link = $this->asgarosforum->rewrite->get_post_link($activity->id, $activity->parent_id);
-                    $link_html = '<a href="'.$link.'">'.$name_topic.'</a>';
-                    echo '<div class="content-element activity-element">';
-                    echo '<span class="activity-icon fas fa-comment '.$read_status.'"></span>';
-                    echo sprintf(__('%s replied in %s.', 'asgaros-forum'), $name_author, $link_html).' <i class="activity-time">'.$human_time_diff.'</i>';
-                    echo '</div>';
+                    $action = '<small>a écrit dans le sujet : </small> ';
                 }
+                $link_html = '<a href="'.$link.'">'.$name_topic.'</a>';
+                
+                echo '<div class="content-element activity-element">';
+                    echo '<span style="flex:1;">';
+                        echo '<i class="activity-time">'.$post_date.'</i>';
+                        echo '<div class="activity-author">';
+                            echo $avatar_author;
+                            echo $name_author;
+                        echo '</div>';
+                    echo '</span>';
+                    echo '<span style="flex:1.2;">';
+                        echo $action;
+                        echo $link_html;
+                    echo '</span>';
+                echo '</div>';
+
+                //echo '<div class="content-element activity-element">';
+                //echo '<span class="activity-icon fas fa-comments '.$read_status.'"></span>';
+                //echo '</div>';
             }
 
             echo '</div>';
@@ -114,7 +131,7 @@ class AsgarosForumActivity {
                 $start = $this->asgarosforum->current_page * $this->asgarosforum->options['activities_per_page'];
                 $end = $this->asgarosforum->options['activities_per_page'];
 
-                return $this->asgarosforum->db->get_results("SELECT p.id, p.parent_id, p.date, p.author_id, t.name FROM {$this->asgarosforum->tables->posts} p, {$this->asgarosforum->tables->topics} t, (SELECT id FROM {$this->asgarosforum->tables->forums} WHERE parent_id IN ({$ids_categories})) f WHERE p.parent_id = t.id AND t.parent_id = f.id AND t.approved = 1 AND p.date > '{$time_end}' ORDER BY p.id DESC LIMIT {$start}, {$end};");
+                return $this->asgarosforum->db->get_results("SELECT p.id, p.parent_id, p.date, p.author_id, t.name FROM {$this->asgarosforum->tables->posts} p, {$this->asgarosforum->tables->topics} t, (SELECT id FROM {$this->asgarosforum->tables->forums} WHERE parent_id IN ({$ids_categories})) f WHERE p.parent_id = t.id AND t.parent_id = f.id AND t.approved = 1 AND p.date > '{$time_end}' ORDER BY p.date DESC LIMIT {$start}, {$end};");
             }
         }
     }
