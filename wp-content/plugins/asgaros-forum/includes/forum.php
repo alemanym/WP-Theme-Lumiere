@@ -1188,7 +1188,7 @@ class AsgarosForum {
         $end = $this->options['posts_per_page'];
 
         $order = apply_filters('asgarosforum_filter_get_posts_order', 'p1.date DESC');
-        $results = $this->db->get_results($this->db->prepare("SELECT p1.id, p1.text, p1.date, p1.date_edit, p1.author_id, p1.author_edit, (SELECT COUNT(*) FROM {$this->tables->posts} AS p2 WHERE p2.author_id = p1.author_id) AS author_posts, p1.uploads FROM {$this->tables->posts} AS p1 WHERE p1.parent_id = %d ORDER BY p1.date DESC LIMIT %d, %d;", $this->current_topic, $start, $end));
+        $results = $this->db->get_results($this->db->prepare("SELECT p1.id, p1.text, p1.date, p1.date_edit, p1.author_id, p1.author_edit, (SELECT COUNT(*) FROM {$this->tables->posts} AS p2 WHERE p2.author_id = p1.author_id) AS author_posts, p1.uploads FROM {$this->tables->posts} AS p1 WHERE p1.parent_id = %d ORDER BY {$order} LIMIT %d, %d;", $this->current_topic, $start, $end));
         $results = apply_filters('asgarosforum_filter_get_posts', $results);
         return $results;
     }

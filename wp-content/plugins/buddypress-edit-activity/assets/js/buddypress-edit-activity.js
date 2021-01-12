@@ -69,7 +69,7 @@ function buddypress_edit_activity_get(link) {
 				$form_wrapper.show();
 
 				$form.find('input[name="activity_id"]').val(data.activity_id);
-				// $form.find('textarea').val(response.content);
+				$form.find('textarea').val(response.content);
 				// CUSTOM Text Rich
 				$form.find('textarea').trumbowyg('html', response.content);
 			}

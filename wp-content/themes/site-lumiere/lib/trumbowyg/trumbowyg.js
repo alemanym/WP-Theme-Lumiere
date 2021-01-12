@@ -1194,7 +1194,7 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                     $('[data-tbw]', t.$ed).contents().unwrap();
 
                     // Remove empty <p>
-                    t.$ed.find('p:empty').remove();
+                    //t.$ed.find('p:empty').remove();
                 }
 
                 if (!keepRange) {

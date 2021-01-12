@@ -15,7 +15,7 @@
 <?php do_action( 'bp_before_activity_comment' ); ?>
 
 <li id="acomment-<?php bp_activity_comment_id(); ?>">
-	<div class="acomment-avatar">
+	<div class="acomment-avatar toto">
 		<a href="<?php bp_activity_comment_user_link(); ?>">
 			<?php bp_activity_avatar( array(
 				'type'    => 'thumb',

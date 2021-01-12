@@ -88,10 +88,13 @@
 
     function colorToHex(rgb) {
         if (rgb.search('rgb') === -1) {
+			console.log('colorToHex C :: ' + rgb);
             return rgb.replace('#', '');
         } else if (rgb === 'rgba(0, 0, 0, 0)') {
+			console.log('colorToHex B :: ' + rgb);
             return 'transparent';
         } else {
+			console.log('colorToHex C :: ' + rgb);
             rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
             return hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
         }
