@@ -41,7 +41,7 @@ class AsgarosForumActivity {
             foreach ($data as $activity) {
                 $current_time = date($this->asgarosforum->date_format, strtotime($activity->date));
                 $human_time_diff = sprintf(__('%s ago', 'asgaros-forum'), human_time_diff(strtotime($activity->date), current_time('timestamp')));
-                $post_date = $this->asgarosforum->format_date($activity->date);
+                $post_date = $this->asgarosforum->format_date_alt($activity->date);
 
                 if ($current_time == $date_today) {
                     $current_time = __('Today', 'asgaros-forum');

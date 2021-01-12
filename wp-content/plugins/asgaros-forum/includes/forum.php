@@ -1480,6 +1480,13 @@ class AsgarosForum {
             return date_i18n($this->date_format, strtotime($date));
         }
     }
+    function format_date_alt($date, $full = true) {
+        if ($full) {
+            return str_replace(',,', ' h ', str_replace(', ', '&nbsp;&nbsp;', date_i18n('j F, H,,i', strtotime($date))));
+        } else {
+            return date_i18n($this->date_format, strtotime($date));
+        }
+    }
 
     function current_time() {
         return current_time('Y-m-d H:i:s');
