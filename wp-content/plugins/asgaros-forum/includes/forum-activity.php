@@ -95,7 +95,7 @@ class AsgarosForumActivity {
                         .'</span>';
                 $tmp = str_replace('<a ', '<span ', $tmp);
                 $tmp = str_replace('</a>', '</span>', $tmp);
-                $tmp = '<a class="content-element activity-element" href="'.$link.'">'
+                $tmp = '<a class="content-element activity-element" href="'.$link.'" data-author="'.$activity->author_id.'">'
                         .$tmp
                         .'</a>';
 
