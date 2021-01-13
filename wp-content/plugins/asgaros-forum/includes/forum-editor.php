@@ -256,21 +256,7 @@ class AsgarosForumEditor {
                     $this->asgarosforum->notifications->show_editor_subscription_option();
                     do_action('asgarosforum_editor_custom_content_bottom', $editor_view);
 
-					echo '<div style="display: flex;" class="editor-row editor-row-submit">';
-					
-						echo '<a class="button toggle-rich-text">Mise en Forme...</a>';
-						echo '<a class="button toggle-upload">Téléverser...</a>';
-						echo '<div style="flex: 1;"></div>';
-
-						if ($inOtherView) {
-							echo '<a href="'.$actionURL.'" class="button button-red cancel">'.__('Cancel', 'asgaros-forum').'</a>';
-						} else {
-							if ($editor_view === 'editpost') {
-								$actionURL = $this->asgarosforum->get_link('topic', $this->asgarosforum->current_topic);
-							}
-							echo '<a href="'.$actionURL.'" class="button button-red">'.__('Cancel', 'asgaros-forum').'</a>';
-						}
-
+                    echo '<div class="editor-row editor-row-submit">';
                         if ($editor_view === 'addtopic') {
                             echo '<input type="hidden" name="submit_action" value="add_topic">';
                         } else if ($editor_view === 'addpost') {
@@ -279,7 +265,17 @@ class AsgarosForumEditor {
                             echo '<input type="hidden" name="submit_action" value="edit_post">';
                         }
 
-	                    echo '<input style="flex: 0.5;" class="button button-normal" type="submit" value="'.__('Submit', 'asgaros-forum').'">';
+						echo '<div class="left">';
+						if ($inOtherView) {
+							echo '<a href="'.$actionURL.'" class="button button-red cancel">'.__('Cancel', 'asgaros-forum').'</a>';
+						} else {
+							if ($editor_view === 'editpost') {
+								$actionURL = $this->asgarosforum->get_link('topic', $this->asgarosforum->current_topic);
+							}
+							echo '<a href="'.$actionURL.'" class="button button-red">'.__('Cancel', 'asgaros-forum').'</a>';
+						}
+						echo '</div>';
+	                    echo '<div class="right"><input class="button button-normal" type="submit" value="'.__('Submit', 'asgaros-forum').'"></div>';
                     echo '</div>';
                 echo '</div>';
             echo '</form>';

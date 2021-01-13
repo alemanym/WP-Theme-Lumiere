@@ -26,7 +26,7 @@ class AsgarosForumPagination {
                 }
 
                 $link = $this->asgarosforum->get_link('topic', $topic_id, array('part' => $num_pages));
-                echo '<a href="'.$link.'">Fin&nbsp;&raquo;</a>';
+                echo '<a href="'.$link.'">'._x('Last', 'Last topic', 'asgaros-forum').'&nbsp;&raquo;</a>';
             }
 
             echo '</div>';
@@ -57,34 +57,15 @@ class AsgarosForumPagination {
             foreach ($categories as $category) {
                 $categoriesFilter[] = $category->term_id;
             }
-            $accessible_categories = implode(',', $categoriesFilter);
 
+            $where = 'AND f.parent_id IN ('.implode(',', $categoriesFilter).')';
             $shortcodeSearchFilter = $this->asgarosforum->shortcode->shortcodeSearchFilter;
 
-            $match_text = "MATCH (text) AGAINST ('{$this->asgarosforum->search->search_keywords_for_query}*' IN BOOLEAN MODE) ";
-            $query_match_text = "SELECT * FROM {$this->asgarosforum->tables->posts} WHERE {$match_text}";
-            $count = $this->asgarosforum->db->get_var("SELECT COUNT(*) ".
-                    " FROM ".
-                        "( {$query_match_text} ) AS p, ".
-                        "{$this->asgarosforum->tables->topics} AS t ".
-                    " WHERE p.parent_id = t.id ".
-                    " AND EXISTS ".
-                        "(SELECT f.id ".
-                            "FROM {$this->asgarosforum->tables->forums} AS f ".
-                            "WHERE f.id = t.parent_id ".
-                            "AND f.parent_id IN ( {$accessible_categories} )
-                        ) ".
-                    " AND t.approved = 1 {$shortcodeSearchFilter}".
-                    " ORDER BY p.date DESC {$query_limit};");
-            $count = intval($count);
-			
-			// result counter display
-			echo '<div class="pagination-count">';
-				echo 'Résultats de la recherche &nbsp;<i class="fa fa-search" aria-hidden="true"></i> <span class="search-key">"'.
-					$this->asgarosforum->search->search_keywords_for_query.'"</span> : ';
-			echo '</div>';
-			
-            $num_pages = ceil($count / 50);
+            $query_match_name = "SELECT id AS topic_id FROM {$this->asgarosforum->tables->topics} WHERE MATCH (name) AGAINST ('{$this->asgarosforum->search->search_keywords_for_query}*' IN BOOLEAN MODE)";
+            $query_match_text = "SELECT parent_id AS topic_id FROM {$this->asgarosforum->tables->posts} WHERE MATCH (text) AGAINST ('{$this->asgarosforum->search->search_keywords_for_query}*' IN BOOLEAN MODE)";
+            $count = $this->asgarosforum->db->get_var("SELECT COUNT(*) FROM (({$query_match_name}) UNION ({$query_match_text})) AS su, {$this->asgarosforum->tables->topics} AS t, {$this->asgarosforum->tables->forums} AS f WHERE su.topic_id = t.id AND t.parent_id = f.id AND t.approved = 1 {$where} {$shortcodeSearchFilter};");
+            $count = (int) $count;
+            $num_pages = ceil($count / $this->asgarosforum->options['topics_per_page']);
         } else if ($location === 'members') {
             // Count the users based on the filter.
             $count = 0;
@@ -123,58 +104,34 @@ class AsgarosForumPagination {
                     }
                 }
             } else {
-				$displayBegin = ($current_page+1) > 4 ;
-				$displayEnd = ($num_pages - $current_page > 4);
-				
-                if ($displayBegin) {
+                if ($current_page >= 3) {
                     $link = remove_query_arg('part', $select_url);
-                    $out .= '<a href="'.$link.'">Début ...</a>';
-					
-					for ($i = 3; $i > 0; $i--) {
-						$n = ($current_page + 1) - $i;
-						if ($n > 0) {
-							$link = add_query_arg('part', $n, $select_url);
-							$out .= '<a href="'.$link.'">'.number_format_i18n($n).'</a>';
-						}
-					}
-                } else {
-					for ($i = 1; $i < $current_page+1; $i++) {
-						$link = add_query_arg('part', $i, $select_url);
-						$out .= '<a href="'.$link.'">'.number_format_i18n($i).'</a>';
-					}
-				}
-                
-				$out .= '<strong>'.number_format_i18n($current_page+1).'</strong>';
-				
-				
-                if ($displayEnd) {
-					for ($i = 3; $i > 0; $i--) {
-						$n = ($current_page + 5) - $i;
-						if (n <= $num_pages) {
-							$link = add_query_arg('part', $n, $select_url);
-							$out .= '<a href="'.$link.'">'.number_format_i18n($n).'</a>';
-						}
-					}
+                    $out .= '<a href="'.$link.'">&laquo;&nbsp;'.__('First', 'asgaros-forum').'</a>';
+                }
+
+                for ($i = 2; $i > 0; $i--) {
+                    if ((($current_page + 1) - $i) > 0) {
+                        $link = add_query_arg('part', (($current_page + 1) - $i), $select_url);
+                        $out .= '<a href="'.$link.'">'.number_format_i18n(($current_page + 1) - $i).'</a>';
+                    }
+                }
+
+                $out .= '<strong>'.number_format_i18n($current_page + 1).'</strong>';
+
+                for ($i = 1; $i <= 2; $i++) {
+                    if ((($current_page + 1) + $i) <= $num_pages) {
+                        $link = add_query_arg('part', (($current_page + 1) + $i), $select_url);
+                        $out .= '<a href="'.$link.'">'.number_format_i18n(($current_page + 1) + $i).'</a>';
+                    }
+                }
+
+                if ($num_pages - $current_page >= 4) {
                     $link = add_query_arg('part', $num_pages, $select_url);
-                    $out .= '<a href="'.$link.'">... Fin</a>';
-                } else {
-					for ($i = $current_page+2; $i <= $num_pages; $i++) {
-                    	$link = add_query_arg('part', $i, $select_url);
-						$out .= '<a href="'.$link.'">'.number_format_i18n($i).'</a>';
-					}
-				}
+                    $out .= '<a href="'.$link.'">'._x('Last', 'Last Page', 'asgaros-forum').'&nbsp;&raquo;</a>';
+                }
             }
 
-			$out .= '</div>';
-			
-			if ($location === 'search') {
-				if ($count > 1) {
-					$out .= '<div> &nbsp;&nbsp;-&nbsp;&nbsp;<strong>'.$count.'</strong> messages</div>';
-				} else if ($count == 1) {
-					$out .= '<div> &nbsp;&nbsp;-&nbsp;&nbsp;<strong>'.$count.'</strong> message</div>';
-				}
-			}
-			
+            $out .= '</div>';
             return $out;
         } else {
             return false;

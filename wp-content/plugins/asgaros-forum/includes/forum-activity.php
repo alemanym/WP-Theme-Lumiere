@@ -22,7 +22,7 @@ class AsgarosForumActivity {
     }
 
     public function show_activity() {
-        $activity_days = intval($this->asgarosforum->options['activity_days']);
+        $activity_days = (int) $this->asgarosforum->options['activity_days'];
         $activity_days_i18n = number_format_i18n($activity_days);
         echo '<div class="main-description">'.sprintf(_n('Activity in the last day.', 'Activity in the last %s days.', $activity_days, 'asgaros-forum'), $activity_days_i18n).'</div>';
 
@@ -82,20 +82,24 @@ class AsgarosForumActivity {
                 }
                 $link_html = '<a href="'.$link.'">'.$name_topic.'</a>';
                 
-                echo '<div class="content-element activity-element">';
-                    echo '<span style="flex:1;">';
-                        echo '<i class="activity-time">'.$post_date.'</i>';
-                        echo '<div class="activity-author">';
-                            echo $avatar_author;
-                            echo $name_author;
-                        echo '</div>';
-                    echo '</span>';
-                    echo '<span style="flex:1.2;">';
-                        echo $action;
-                        echo $link_html;
-                    echo '</span>';
-                echo '</div>';
+                $tmp = '<span style="flex:1;">'
+                            .'<span class="activity-time">'.$post_date.'</span>'
+                            .'<div class="activity-author">'
+                                .$avatar_author
+                                .$name_author
+                            .'</div>'
+                        .'</span>'
+                        .'<span style="flex:1.2;">'
+                            .$action
+                            .$name_topic
+                        .'</span>';
+                $tmp = str_replace('<a ', '<span ', $tmp);
+                $tmp = str_replace('</a>', '</span>', $tmp);
+                $tmp = '<a class="content-element activity-element" href="'.$link.'">'
+                        .$tmp
+                        .'</a>';
 
+                echo $tmp;
                 //echo '<div class="content-element activity-element">';
                 //echo '<span class="activity-icon fas fa-comments '.$read_status.'"></span>';
                 //echo '</div>';
@@ -122,7 +126,7 @@ class AsgarosForumActivity {
 
             // Calculate activity end-time.
             $time_current = time();
-            $time_end = $time_current - (intval($this->asgarosforum->options['activity_days']) * 24 * 60 * 60);
+            $time_end = $time_current - ((int) $this->asgarosforum->options['activity_days'] * 24 * 60 * 60);
             $time_end = date('Y-m-d H:i:s', $time_end);
 
             if ($count_all) {
