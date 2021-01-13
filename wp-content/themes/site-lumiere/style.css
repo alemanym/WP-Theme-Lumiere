@@ -1469,7 +1469,7 @@ body.message-menu-position-alt #filter-chooser-menu {
 #menu-recent > * > .author {
 	font-weight: normal;
 	color: #ad5cb8;
-	flex: 1 0 49% !important;
+	flex: 1 0 0%;
 }
 #menu-recent > * > .date {
 	/* color: #555; */
@@ -6627,6 +6627,7 @@ body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper .forum-descriptio
 body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper > .content-container,
 body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper .forum-poster {
 	display: block !important;
+	position: inherit;
 }
 body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper *{
 	margin: 0 !important;
@@ -6635,10 +6636,11 @@ body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper *{
 body.page-id-2530.asgaros-forum-overview.in-iframe section.content {
 	height: 100vh;
 }
-body.page-id-2530.asgaros-forum-overview.in-iframe .content-element.forum {
+body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper .content-element.forum {
 	display: flex !important;
 	flex-flow: column;
 	height: unset !important;
+	margin-top: 5px !important;
 }
 body.page-id-2530.asgaros-forum-overview.in-iframe .forum-poster {
 	width: 100% !important;
@@ -6654,6 +6656,9 @@ body.page-id-2530.asgaros-forum-overview.in-iframe .forum-poster::before {
 	float: left;
 	margin-right: 10px;
 	font-size: 14px;
+	position: absolute;
+	right: 0;
+	color: #d0a1cc;
 }
 body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper .forum-name,
 body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper .topic-name {
@@ -6696,11 +6701,19 @@ body.page-id-2530.asgaros-forum-overview.in-iframe #af-wrapper #forum-22 .forum-
 body.asgaros-forum-activity.in-iframe #af-wrapper small {
 	display: none;
 }
-
 body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element {
 	display: flex;
 	flex-flow: column;
 	padding: 8px;
+	position: relative;
+	color: #ad5cb8 !important;
+	/* box-shadow: 1px 1px 5px -4px #91288e, inset 0 0 20px #f5eff5; */
+	box-shadow: inset 0 0 20px #faebff;
+}
+body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element:hover {
+	background: radial-gradient(ellipse at bottom, white, #ecdffe);
+	color: #91288e !important;
+	position: relative;
 }
 body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element > * {
 	display: flex;
@@ -6709,10 +6722,34 @@ body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-elem
 	align-items: center;
 	font-size: 14px;
 	line-height: normal;
+	transition: 0.3s all ease-in-out;
+}
+body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element:hover > * {
+	margin-left: 5px !important;
+}
+body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element > :last-child {
+	flex-flow: row;
+	padding: 0 0 0 50px;
+}
+body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element .avatar {
+	position: absolute;
+	width: 40px;
+	top: 8px;
+	left: 6px;
+	z-index: 10;
+}
+body.asgaros-forum-activity.in-iframe #af-wrapper .content-element.activity-element .profile-link {
+	font-weight: bolder;
+	padding: 2px 0 2px 50px;
+	white-space: nowrap;
 }
 body.asgaros-forum-activity.in-iframe #af-wrapper .activity-element .activity-time {
 	white-space: nowrap;
 	text-align: end;
+	font-size: 14px;
+	font-style: initial;
+	color: #9b8f9c !important;
+	padding-right: 2px;
 }
 body.asgaros-forum-activity.in-iframe #af-wrapper {
 	font-size: 14px !important;
